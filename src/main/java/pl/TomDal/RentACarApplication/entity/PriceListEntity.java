@@ -1,0 +1,33 @@
+package pl.TomDal.RentACarApplication.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import pl.TomDal.RentACarApplication.entity.enums.CarType;
+
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+
+@Getter
+@Setter
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "price_list")
+public class PriceListEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "price_list_id")
+    private Integer priceListId;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "price_date")
+    private OffsetDateTime priceDate;
+
+    @Column(name = "car_type")
+    private CarType carType;
+}
