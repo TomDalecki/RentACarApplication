@@ -49,9 +49,13 @@ public class RentalOrderEntity {
     @ToString.Exclude
     private CustomerEntity customer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rentalOrder")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "rental_history",
+            joinColumns = {@JoinColumn(name = "car_to_rent_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rental_order_id")}
+    )
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Set<CarToRentEntity> carsToRent;
 
     @ManyToOne(fetch = FetchType.LAZY)

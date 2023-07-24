@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS rental_history CASCADE;
 DROP TABLE IF EXISTS price_list CASCADE;
 DROP TABLE IF EXISTS car_technical_inspection CASCADE;
 DROP TABLE IF EXISTS car_insurance CASCADE;

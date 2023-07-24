@@ -2,7 +2,7 @@ package pl.TomDal.RentACarApplication.entity.enums;
 
 public enum CarType {
     Sedan,
-    Cabrio,
+    Cabriolet,
     Combi,
     SUV
 }

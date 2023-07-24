@@ -3,9 +3,11 @@ package pl.TomDal.RentACarApplication.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -44,11 +46,13 @@ public class CarToRentEntity {
     @Column(name = "color")
     private String color;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_order_id")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "car_status")
+    private CarStatus carStatus;
+
+    @ManyToMany(mappedBy = "carsToRent")
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private RentalOrderEntity rentalOrder;
+    private Set<RentalOrderEntity> rentalOrders;
 
     @Override
     public final boolean equals(Object o) {

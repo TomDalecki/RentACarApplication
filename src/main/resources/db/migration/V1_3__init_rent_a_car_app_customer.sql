@@ -5,7 +5,7 @@ CREATE TABLE customer
     surname         VARCHAR(30)     NOT NULL,
     phone           VARCHAR(30)     NOT NULL,
     email           VARCHAR(30)     NOT NULL,
-    address_id      INT             NOT NULL,
+    address_id      INT                 NULL,
     PRIMARY KEY (customer_id),
     UNIQUE (email),
     CONSTRAINT fk_customer_address
