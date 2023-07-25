@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,8 +49,7 @@ public class CarToRentEntity {
     @Column(name = "car_status")
     private CarStatus carStatus;
 
-    @ManyToMany(mappedBy = "carsToRent")
-    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "carsToRent")
     private Set<RentalOrderEntity> rentalOrders;
 
     @Override

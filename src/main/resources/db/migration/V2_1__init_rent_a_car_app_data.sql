@@ -14,12 +14,12 @@ values
 
 insert into CAR_TO_RENT (car_to_rent_id, vin, car_id_number, car_type, brand, model, production_year, color, car_status)
 values
-('1', '1FT7X2B60FEA74019', 'SK12345', 'Sedan', 'Fiat', 'Punto', '2020', 'grey', 'TO_RENT'),
-('2', '1N6BD06T45C416702', 'SK67890', 'Sedan', 'Hyundai', 'i30', '2020', 'red', 'TO_RENT'),
-('3', '1G1PE5S97B7239380', 'SK78945', 'Sedan', 'Ford', 'Kuga', '2020', 'black', 'TO_RENT'),
-('4', '1GCEC19X27Z109567', 'SK89456', 'Sedan', 'Skoda', 'Fabia', '2020', 'white', 'TO_RENT'),
-('5', '2C3CDYAG2DH731952', 'SK32165', 'Sedan', 'Toyota', 'Corolla', '2020', 'white', 'TO_RENT'),
-('6', '1GB6G5CG1C1105936', 'SK98765', 'Sedan', 'Dacia', 'Duster', '2020', 'black', 'TO_RENT');
+('1', '1FT7X2B60FEA74019', 'SK12345', 'Sedan', 'Fiat', 'Punto', '2014', 'grey', 'TO_RENT'),
+('2', '1N6BD06T45C416702', 'SK67890', 'Cabriolet', 'Hyundai', 'i30', '2020', 'red', 'TECHNICAL_ISSUE'),
+('3', '1G1PE5S97B7239380', 'SK78945', 'SUV', 'Ford', 'Kuga', '2019', 'black', 'TO_RENT'),
+('4', '1GCEC19X27Z109567', 'SK89456', 'Sedan', 'Skoda', 'Fabia', '2016', 'white', 'DISABLED_BY_INSURANCE'),
+('5', '2C3CDYAG2DH731952', 'SK32165', 'Sedan', 'Toyota', 'Corolla', '2022', 'white', 'TO_RENT'),
+('6', '1GB6G5CG1C1105936', 'SK98765', 'SUV', 'Dacia', 'Duster', '2021', 'black', 'RENTED');
 
 
 insert into CAR_INSURANCE (insurance_company, insurance_type, insurance_number, insurance_end_date, insurance_start_date, car_to_rent_id)
