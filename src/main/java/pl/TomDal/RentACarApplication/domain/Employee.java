@@ -10,8 +10,8 @@ import java.util.Set;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class Salesman {
-    Integer salesmanId;
+public class Employee {
+    Integer employeeId;
     String name;
     String surname;
     String pesel;

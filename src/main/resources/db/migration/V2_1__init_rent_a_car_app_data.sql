@@ -1,9 +1,9 @@
-insert into SALESMAN (name, surname, pesel)
+insert into EMPLOYEE (name, surname, pesel)
 values
-('Andrzej', 'Sprzedawca_1', '65104561458'),
-('Wojtek', 'Sprzedawca_2', '78052468945'),
-('Tomasz', 'Sprzedawca_3', '62021258518'),
-('Łuksz', 'Sprzwedawca_4', '88072945852');
+('Andrzej', 'Pracownik_1', '65104561458'),
+('Wojtek', 'Pracownik_2', '78052468945'),
+('Tomasz', 'Pracownik_3', '62021258518'),
+('Łuksz', 'Pracownik_4', '88072945852');
 
 insert into CUSTOMER (customer_id, name, surname, phone, email)
 values

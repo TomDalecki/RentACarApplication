@@ -13,3 +13,5 @@ CREATE TABLE car_insurance
         FOREIGN KEY (car_to_rent_id)
             REFERENCES car_to_rent (car_to_rent_id)
 );
+
+ALTER SEQUENCE car_insurance_car_insurance_id_seq RESTART WITH 100;

@@ -13,3 +13,5 @@ CREATE TABLE car_to_rent
     PRIMARY KEY (car_to_rent_id),
     UNIQUE (vin, car_id_number)
 );
+
+ALTER SEQUENCE car_to_rent_car_to_rent_id_seq RESTART WITH 100;

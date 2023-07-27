@@ -11,4 +11,8 @@ public interface CarToRentEntityMapper {
 
     @Mapping(target = "rentalOrders", ignore = true)
     CarToRent mapFromEntity(CarToRentEntity entity);
+
+    @Mapping(target = "rentalOrders", ignore = true)
+    CarToRentEntity mapToEntity(CarToRent car);
+
 }

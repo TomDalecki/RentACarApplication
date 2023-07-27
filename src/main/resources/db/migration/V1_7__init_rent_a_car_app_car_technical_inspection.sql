@@ -8,3 +8,5 @@ CREATE TABLE car_technical_inspection
         FOREIGN KEY (car_to_rent_id)
             REFERENCES car_to_rent (car_to_rent_id)
 );
+
+ALTER SEQUENCE car_technical_inspection_car_technical_inspection_id_seq RESTART WITH 100;

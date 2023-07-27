@@ -2,10 +2,12 @@ package pl.TomDal.RentACarApplication.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,14 @@ public class CarToRentService {
         return availableCarsByCarType;
     }
 
+    public List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate){
+        List<CarToRent> findAvailableCarsByStartEndDate = carToRentDAO.findAvailableCarsByStartEndDate(startDate, endDate);
+        for (CarToRent carToRent : findAvailableCarsByStartEndDate) {
+            System.out.println("Cars to rent by date: "  + carToRent);
+        }
+        return findAvailableCarsByStartEndDate;
+    }
+
     public Optional<CarToRent> findByCarIdNumber(String carIdNumber){
         Optional<CarToRent> car = carToRentDAO.findByCarIdNumber(carIdNumber);
         System.out.println("Car by IdNumber: " + car.get());
@@ -47,5 +57,10 @@ public class CarToRentService {
         Optional<CarToRent> car = carToRentDAO.findByVin(vin);
         System.out.println("Car by VIN: " + car.get());
         return car;
+    }
+
+    @Transactional
+    public void addCar(CarToRent carToRent){
+        carToRentDAO.addCar(carToRent);
     }
 }

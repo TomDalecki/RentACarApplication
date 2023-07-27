@@ -2,11 +2,11 @@ package pl.TomDal.RentACarApplication.repository.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import pl.TomDal.RentACarApplication.domain.Salesman;
-import pl.TomDal.RentACarApplication.entity.SalesmanEntity;
+import pl.TomDal.RentACarApplication.domain.Employee;
+import pl.TomDal.RentACarApplication.entity.EmployeeEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface SalesmanEntityMapper {
+public interface EmployeeEntityMapper {
 
-    Salesman mapFromEntity(SalesmanEntity entity);
+    Employee mapFromEntity(EmployeeEntity entity);
 }

@@ -6,6 +6,7 @@ import org.hibernate.proxy.HibernateProxy;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.Set;
@@ -32,10 +33,10 @@ public class RentalOrderEntity {
     private OffsetDateTime receivedDateTime;
 
     @Column(name = "rental_start_date")
-    private OffsetDateTime rentalStartDate;
+    private LocalDate rentalStartDate;
 
     @Column(name = "rental_end_date")
-    private OffsetDateTime rentalEndDate;
+    private LocalDate rentalEndDate;
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;
@@ -59,10 +60,10 @@ public class RentalOrderEntity {
     private Set<CarToRentEntity> carsToRent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "salesman_id")
+    @JoinColumn(name = "employee_id")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private SalesmanEntity salesman;
+    private EmployeeEntity employee;
 
     @Override
     public final boolean equals(Object o) {

@@ -2,12 +2,14 @@ package pl.TomDal.RentACarApplication.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.TomDal.RentACarApplication.entity.enums.CarType;
-import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
+import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
+import pl.TomDal.RentACarApplication.entity.enums.CarType;
 import pl.TomDal.RentACarApplication.repository.jpa.CarToRentJpaRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.CarToRentEntityMapper;
+import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,6 +52,19 @@ public class CarToRentRepository implements CarToRentDAO {
     @Override
     public List<CarToRent> findAllCars() {
         return carToRentJpaRepository.findAll().stream()
+                .map(carToRentEntityMapper::mapFromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addCar(CarToRent car) {
+        CarToRentEntity carToSave = carToRentEntityMapper.mapToEntity(car);
+        carToRentJpaRepository.save(carToSave);
+    }
+
+    @Override
+    public List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate) {
+        return carToRentJpaRepository.findAvailableCarsByStartEndDate(startDate, endDate).stream()
                 .map(carToRentEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
     }

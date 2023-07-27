@@ -13,3 +13,5 @@ CREATE TABLE customer
             REFERENCES address (address_id)
 
 );
+
+ALTER SEQUENCE customer_customer_id_seq RESTART WITH 100;

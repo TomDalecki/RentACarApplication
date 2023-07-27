@@ -14,13 +14,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "salesman")
-public class SalesmanEntity {
+@Table(name = "employee")
+public class EmployeeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "salesman_id")
-    private Integer salesmanId;
+    @Column(name = "employee_id")
+    private Integer employeeId;
 
     @Column(name = "name")
     private String name;
@@ -31,7 +31,7 @@ public class SalesmanEntity {
     @Column(name = "pesel", unique = true)
     private String pesel;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "salesman")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<RentalOrderEntity> rentalOrders;
@@ -43,8 +43,8 @@ public class SalesmanEntity {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        SalesmanEntity that = (SalesmanEntity) o;
-        return getSalesmanId() != null && Objects.equals(getSalesmanId(), that.getSalesmanId());
+        EmployeeEntity that = (EmployeeEntity) o;
+        return getEmployeeId() != null && Objects.equals(getEmployeeId(), that.getEmployeeId());
     }
 
     @Override
