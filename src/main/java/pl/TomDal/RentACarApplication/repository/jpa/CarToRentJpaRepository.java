@@ -1,8 +1,11 @@
 package pl.TomDal.RentACarApplication.repository.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
@@ -12,7 +15,6 @@ import java.util.Optional;
 
 @Repository
 public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, Integer> {
-
     Optional<CarToRentEntity> findByCarIdNumber(String carIdNumber);
 
     Optional<CarToRentEntity> findByVin(String vin);
@@ -41,4 +43,9 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
             OR (rh.rentalStartDate >= :startDate AND rh.rentalStartDate <= :endDate)))
             """)
     List<CarToRentEntity> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate);
+
+    @Transactional
+    @Modifying
+    @Query("update CarToRentEntity c set c.carStatus = RENTED where c.carToRentId = :carToRentId")
+    void updateCarStatusByCarToRentId(@Param("carToRentId") Integer carToRentId);
 }

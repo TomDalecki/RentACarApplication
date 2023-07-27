@@ -19,7 +19,7 @@ public interface CarToRentDAO {
 
     Optional<CarToRent> findByVin(String vin);
 
-    void addCar(CarToRent carToRent);
+    void addCarToFleet(CarToRent carToRent);
 
     List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate);
 }

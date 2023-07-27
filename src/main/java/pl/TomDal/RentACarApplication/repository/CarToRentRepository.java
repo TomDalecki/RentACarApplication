@@ -57,7 +57,7 @@ public class CarToRentRepository implements CarToRentDAO {
     }
 
     @Override
-    public void addCar(CarToRent car) {
+    public void addCarToFleet(CarToRent car) {
         CarToRentEntity carToSave = carToRentEntityMapper.mapToEntity(car);
         carToRentJpaRepository.save(carToSave);
     }

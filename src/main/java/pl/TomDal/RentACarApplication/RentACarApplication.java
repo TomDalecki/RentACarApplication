@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
+import pl.TomDal.RentACarApplication.services.EmployeeService;
 
 import java.time.LocalDate;
 
@@ -18,24 +19,27 @@ public class RentACarApplication {
         ConfigurableApplicationContext context = SpringApplication.run(RentACarApplication.class, args);
 
         CarToRentService carToRentService = context.getBean(CarToRentService.class);
-
-        CarToRent car1 = CarToRent.builder()
-                .vin("5FT7X2B60FEA74012")
-                .carIdNumber("SC12347")
-                .carType(Sedan)
-                .brand("Fiat")
-                .model("Punto")
-                .year(2014)
-                .color("red")
-                .carStatus(CarStatus.DISABLED_BY_TECH_INSP)
-                .build();
-
-        //carToRentService.addCar(car1);
+        EmployeeService employeeService = context.getBean(EmployeeService.class);
 
 
-        carToRentService.findAvailableCarsByStartEndDate(
-                LocalDate.of(2023, 7,23), LocalDate.of(2023,7,25));
-        System.out.println("------------------------------");
+//        employeeService.findOpenRentalOrdersByEmail("piotr@com.pl");
+
+//        CarToRent car1 = CarToRent.builder()
+//                .vin("5FT7X2B60FEA74012")
+//                .carIdNumber("SC12347")
+//                .carType(Sedan)
+//                .brand("Fiat")
+//                .model("Punto")
+//                .year(2014)
+//                .color("red")
+//                .carStatus(CarStatus.DISABLED_BY_TECH_INSP)
+//                .build();
+
+//        carToRentService.addCar(car1);
+
+//        carToRentService.findAvailableCarsByStartEndDate(
+//                LocalDate.of(2023, 7,23), LocalDate.of(2023,7,25));
+//        System.out.println("------------------------------");
 
 //        carToRentService.findAvailableCars();
 //        System.out.println("------------------------------");

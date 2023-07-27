@@ -17,35 +17,19 @@ public class CarToRentService {
     CarToRentDAO carToRentDAO;
 
     public List<CarToRent> findAllCars(){
-        List<CarToRent> allCars = carToRentDAO.findAllCars();
-        for (CarToRent allCar : allCars) {
-            System.out.println("All cars: " + allCar);
-        }
-        return allCars;
+        return carToRentDAO.findAllCars();
     }
 
     public List<CarToRent> findAvailableCars(){
-        List<CarToRent> carsAvailableToRent = carToRentDAO.findCarsAvailableToRent();
-        for (CarToRent carToRent : carsAvailableToRent) {
-            System.out.println("Car to rent: " + carToRent);
-        }
-        return carsAvailableToRent;
+        return carToRentDAO.findCarsAvailableToRent();
     }
 
     public List<CarToRent> findAvailableCarsByCarType(CarType carType){
-        List<CarToRent> availableCarsByCarType = carToRentDAO.findAvailableCarsByCarType(carType);
-        for (CarToRent carToRent : availableCarsByCarType) {
-            System.out.println("Cars to rent - by Type: " + carToRent);
-        }
-        return availableCarsByCarType;
+        return carToRentDAO.findAvailableCarsByCarType(carType);
     }
 
     public List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate){
-        List<CarToRent> findAvailableCarsByStartEndDate = carToRentDAO.findAvailableCarsByStartEndDate(startDate, endDate);
-        for (CarToRent carToRent : findAvailableCarsByStartEndDate) {
-            System.out.println("Cars to rent by date: "  + carToRent);
-        }
-        return findAvailableCarsByStartEndDate;
+        return carToRentDAO.findAvailableCarsByStartEndDate(startDate, endDate);
     }
 
     public Optional<CarToRent> findByCarIdNumber(String carIdNumber){
@@ -60,7 +44,7 @@ public class CarToRentService {
     }
 
     @Transactional
-    public void addCar(CarToRent carToRent){
-        carToRentDAO.addCar(carToRent);
+    public void addCarToFleet(CarToRent carToRent){
+        carToRentDAO.addCarToFleet(carToRent);
     }
 }
