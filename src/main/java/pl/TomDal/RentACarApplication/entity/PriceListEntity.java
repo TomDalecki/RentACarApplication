@@ -19,7 +19,7 @@ public class PriceListEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "price_list_id")
+    @Column(name = "price_id")
     private Integer priceListId;
 
     @Column(name = "price")
@@ -28,6 +28,7 @@ public class PriceListEntity {
     @Column(name = "price_date")
     private OffsetDateTime priceDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "car_type")
     private CarType carType;
 }

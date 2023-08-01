@@ -2,25 +2,42 @@ package pl.TomDal.RentACarApplication.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
-import pl.TomDal.RentACarApplication.entity.enums.CarType;
+import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
+import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
-import pl.TomDal.RentACarApplication.services.dao.RentalOrderDTO;
+import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class RentalOrderService {
-    RentalOrderDTO rentalOrderDTO;
+    RentalOrderDAO rentalOrderDAO;
     CarToRentDAO carToRentDAO;
 
     public void saveRentalOrder(RentalOrder rentalOrder){
-        rentalOrderDTO.saveRentalOrder(rentalOrder);
+        rentalOrderDAO.saveRentalOrder(rentalOrder);
+    }
+
+    public void changeOrderStatus (Integer rentOrderId, OrderStatus orderStatus, Integer carToRentId){
+        rentalOrderDAO.changeOrderStatus(rentOrderId, orderStatus);
+
+        if (orderStatus.equals(OrderStatus.ACCEPTED)){
+            changeCarToRentStatus(carToRentId, CarStatus.RENTED);
+        }
+    }
+
+    private void changeCarToRentStatus(Integer carToRentId, CarStatus carStatus) {
+        rentalOrderDAO.changeCarToRentStatus(carToRentId, carStatus);
+    }
+
+    public List<RentalOrder> findOpenRentalOrdersByEmail (String email){
+        List<RentalOrder> openRentalOrdersByEmail = rentalOrderDAO.findOpenRentalOrdersByEmail(email);
+        for (RentalOrder rentalOrder : openRentalOrdersByEmail) {
+            System.out.println("Open rental orders by email: " + rentalOrder);
+        }
+        return openRentalOrdersByEmail;
     }
 
 

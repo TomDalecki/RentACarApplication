@@ -2,8 +2,10 @@ package pl.TomDal.RentACarApplication.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
+import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 import pl.TomDal.RentACarApplication.repository.jpa.CarToRentJpaRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.CarToRentEntityMapper;
@@ -67,5 +69,17 @@ public class CarToRentRepository implements CarToRentDAO {
         return carToRentJpaRepository.findAvailableCarsByStartEndDate(startDate, endDate).stream()
                 .map(carToRentEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CarToRent> findCarsToRentByCarStatus(CarStatus carStatus) {
+        return carToRentJpaRepository.findCarsToRentByCarStatus(carStatus).stream()
+                .map(carToRentEntityMapper::mapFromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeCarStatusAfterCustomerReservation(Integer carToRentId, CarStatus carStatus) {
+        carToRentJpaRepository.updateCarStatusByCarToRentId(carToRentId, carStatus);
     }
 }

@@ -49,8 +49,11 @@ public class CarToRentEntity {
     @Column(name = "car_status")
     private CarStatus carStatus;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "carsToRent")
-    private Set<RentalOrderEntity> rentalOrders;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
+    private Set<RentalOrderEntity> rentalOrder;
+
+//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "carsToRent")
+//    private Set<RentalOrderEntity> rentalOrders;
 
     @Override
     public final boolean equals(Object o) {

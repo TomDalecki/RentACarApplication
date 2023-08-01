@@ -20,8 +20,13 @@ h1{
     border-radius: 26px;
 }
 
+h6{
+    color: darkorange;
+    font-size: 25px;
+}
+
 tbody{
-    background-color: cornsilk;
+    background-color: dimgrey;
 }
 
 td{
@@ -48,8 +53,9 @@ ul{
     border-radius: 26px;
 }
 
-.link-style{
+.table-button{
     text-decoration: none;
-    color: darkorange;
+    color: white;
 }
+
 

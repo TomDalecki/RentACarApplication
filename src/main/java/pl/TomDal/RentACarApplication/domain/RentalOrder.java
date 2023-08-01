@@ -6,7 +6,6 @@ import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Set;
 
 @With
 @Value
@@ -22,7 +21,7 @@ public class RentalOrder {
     BigDecimal totalPrice;
     OrderStatus orderStatus;
     Customer customer;
-    Set<CarToRent> carsToRent;
+    CarToRent carToRent;
     Employee employee;
 
 }

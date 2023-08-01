@@ -8,4 +8,6 @@ import pl.TomDal.RentACarApplication.domain.CarToRent;
 public interface CarToRentMapper {
 
     CarToRentDTO mapToDTO(final CarToRent carToRent);
+
+    CarToRent mapFromDTO(final CarToRentDTO carToRent);
 }

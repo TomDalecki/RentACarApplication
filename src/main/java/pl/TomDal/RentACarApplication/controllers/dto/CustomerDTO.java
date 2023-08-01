@@ -1,10 +1,10 @@
 package pl.TomDal.RentACarApplication.controllers.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.TomDal.RentACarApplication.domain.Address;
-import pl.TomDal.RentACarApplication.domain.RentalOrder;
-
-import java.util.Set;
 
 @Data
 @Builder

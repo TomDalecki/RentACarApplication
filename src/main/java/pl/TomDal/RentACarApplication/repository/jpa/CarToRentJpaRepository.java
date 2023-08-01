@@ -7,9 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
+import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +21,13 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
 
     Optional<CarToRentEntity> findByVin(String vin);
 
+    @Query("""
+            SELECT car FROM CarToRentEntity car
+            WHERE car.carStatus = :carStatus
+            """)
+    List<CarToRentEntity> findCarsToRentByCarStatus(CarStatus carStatus);
+
+    //To jest do usunięcia i zastąpienia przez query powyżej
     @Query("""
             SELECT car FROM CarToRentEntity car
             WHERE car.carStatus = 'TO_RENT'
@@ -46,6 +55,12 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
 
     @Transactional
     @Modifying
-    @Query("update CarToRentEntity c set c.carStatus = RENTED where c.carToRentId = :carToRentId")
-    void updateCarStatusByCarToRentId(@Param("carToRentId") Integer carToRentId);
+    @Query("""
+            UPDATE CarToRentEntity c
+            SET c.carStatus = :carStatus
+            WHERE c.carToRentId = :carToRentId
+            """)
+    void updateCarStatusByCarToRentId(@Param("carToRentId") Integer carToRentId,
+                                      @Param("carStatus")CarStatus carStatus);
+
 }

@@ -1,7 +1,7 @@
 CREATE TABLE rental_order
 (
     rental_order_id         SERIAL                      NOT NULL,
-    rental_number           VARCHAR(30)                 NOT NULL,
+    rental_number           VARCHAR(36)                 NOT NULL,
     received_date_time      TIMESTAMP WITH TIME ZONE    NOT NULL,
     rental_start_date       DATE                        NOT NULL,
     rental_end_date         DATE                        NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE rental_order
     order_status            VARCHAR(30)                 NOT NULL,
     customer_id             INT                         NOT NULL,
     car_to_rent_id          INT                         NOT NULL,
-    employee_id             INT                         NOT NULL,
+    employee_id             INT,
     PRIMARY KEY (rental_order_id),
     UNIQUE (rental_number),
     CONSTRAINT fk_rental_order_customer

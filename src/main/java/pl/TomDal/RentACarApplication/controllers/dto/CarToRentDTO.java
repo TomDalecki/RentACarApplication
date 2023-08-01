@@ -1,11 +1,11 @@
 package pl.TomDal.RentACarApplication.controllers.dto;
 
-import lombok.*;
-import pl.TomDal.RentACarApplication.domain.RentalOrder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
-
-import java.util.Set;
 
 @Data
 @Builder

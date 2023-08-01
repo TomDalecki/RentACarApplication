@@ -9,14 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntity, Integer> {
     @Transactional
     @Modifying
-    @Query("update RentalOrderEntity r set r.orderStatus = :orderStatus where r.rentalOrderId = :rentalOrderId")
+    @Query("""
+            UPDATE RentalOrderEntity r 
+            SET r.orderStatus = :orderStatus 
+            WHERE r.rentalOrderId = :rentalOrderId""")
     void updateOrderStatusByRentalOrderId(@Param("orderStatus") OrderStatus orderStatus,
                                           @Param("rentalOrderId") Integer rentalOrderId);
 

@@ -6,4 +6,4 @@ values
 
 insert into RENTAL_HISTORY (rental_start_date, rental_end_date, total_price, rent_order_status, car_to_rent_id, rental_order_id)
 values
-('20230725', '20230726', '500.00', 'RENTED', '1', '2');
+('20230725', '20230726', '500.00', 'RENTED', '1', '1');

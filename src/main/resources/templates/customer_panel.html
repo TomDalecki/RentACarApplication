@@ -15,7 +15,7 @@
         background-size: cover;
         }
     </style>
-    <title>Rent A Car Application</title>
+    <title>Car Application</title>
 </head>
 
 <body>
@@ -56,10 +56,11 @@
             <table class="table">
                 <thead class="table-dark">
                 <tr>
-                    <th>brand</th>
-                    <th>model</th>
-                    <th>year</th>
-                    <th>color</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Color</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,6 +69,16 @@
                     <td th:text="${car.model}"></td>
                     <td th:text="${car.year}"></td>
                     <td th:text="${car.color}"></td>
+
+                    <td>
+                            <form th:action="@{/rent/{carId}(carId=${car.carToRentId})}" method="get">
+                            <button class="btn btn-success" type="submit" value="[[${car.carToRentId}]]">
+
+                                <a class="link-style"
+                                >Rent</a>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

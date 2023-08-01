@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+                crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet" crossorigin="anonymous">
+
+    <style>
+        body{
+        background-image: url("images/pietrowy_parking.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        }
+    </style>
+    <title>Rent A Car Application</title>
+</head>
+
+<body>
+    <div>
+        <h1>Customer Panel</h1>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="container">
+        <form th:object="${customerRentalOrderDTO}" th:action="@{/saveOrder}"  method="post">
+          <h2>Chosen car to rent</h2>
+
+            <table class="table">
+                <thead class="table-dark">
+                <tr>
+                    <th>brand</th>
+                    <th>model</th>
+                    <th>year</th>
+                    <th>color</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${selectedCarToRent.brand}" ></td>
+                    <td th:text="${selectedCarToRent.model}"></td>
+                    <td th:text="${selectedCarToRent.year}"></td>
+                    <td th:text="${selectedCarToRent.color}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <input type="hidden" th:value="${selectedCarToRent.carToRentId}" th:field="*{selectedCarToRentId}"/>
+
+
+        <h2>Input email, start and end rental date:</h2>
+            <div >
+                <label for="customerEmail">Email:</label>
+                <span>
+                    <input type="text" id="customerEmail" th:field="*{customerEmail}" required/>
+                </span>
+            </div>
+
+            <br>
+
+            <div >
+                <label >Start Date:</label>
+                <span>
+                    <input type="date" th:field="${customerRentalOrderDTO.rentalStartDate}" required/>
+                </span>
+            </div>
+
+            <br>
+
+            <div>
+                <label>End Date:</label>
+                <span>
+                    <input type="date" th:field="${customerRentalOrderDTO.rentalEndDate}" required/>
+                </span>
+            </div>
+
+            <br/>
+
+            <button class="btn btn-success" type="submit">Send</button>
+            <button class="btn btn-dark"> <a class="link-style" href="/">Go back to the main page</a></button>
+        </form>
+
+        </div>
+    </div>
+</body>
+</html>
