@@ -1,9 +1,6 @@
 package pl.TomDal.RentACarApplication.controllers.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.domain.Customer;
 import pl.TomDal.RentACarApplication.domain.Employee;
@@ -13,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
+@With
 @Data
 @Builder
 @NoArgsConstructor

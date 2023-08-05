@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
@@ -16,12 +17,11 @@ public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntit
     @Transactional
     @Modifying
     @Query("""
-            UPDATE RentalOrderEntity r 
-            SET r.orderStatus = :orderStatus 
+            UPDATE RentalOrderEntity r
+            SET r.orderStatus = :orderStatus
             WHERE r.rentalOrderId = :rentalOrderId""")
     void updateOrderStatusByRentalOrderId(@Param("orderStatus") OrderStatus orderStatus,
                                           @Param("rentalOrderId") Integer rentalOrderId);
-
 
     @Query("""
             SELECT ord FROM RentalOrderEntity ord
@@ -29,4 +29,14 @@ public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntit
             WHERE ord.orderStatus = 'NEW_ORDER' AND customer.email = :email
             """)
     List<RentalOrderEntity> findOpenRentalOrdersByEmail(String email);
+
+    @Query("""
+    SELECT ord.rentalOrderId as rentalOrderId, car.carToRentId as carToRentId, car.carIdNumber as carIdNumber,
+    car.carType as carType, car.brand as brand, car.model as model, car.year as year, car.color as color,
+    ord.rentalStartDate as rentalStartDate, ord.rentalEndDate as rentalEndDate, ord.totalPrice as totalPrice
+    FROM RentalOrderEntity ord
+    INNER JOIN CarToRentEntity car ON ord.rentalOrderId = car.carToRentId
+    WHERE ord.orderStatus = :orderStatus
+    """)
+    List<OrderAndCar> findOrdersByStatusJoinedWithCars(@Param("orderStatus") OrderStatus orderStatus);
 }

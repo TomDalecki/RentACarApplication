@@ -2,7 +2,6 @@ package pl.TomDal.RentACarApplication.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
@@ -23,13 +22,11 @@ public class CarToRentRepository implements CarToRentDAO {
     private final CarToRentEntityMapper carToRentEntityMapper;
     private final CarToRentJpaRepository carToRentJpaRepository;
 
-
     @Override
     public List<CarToRent> findCarsAvailableToRent() {
         return carToRentJpaRepository.findAvailableCarsToRent().stream()
                 .map(carToRentEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -59,12 +56,6 @@ public class CarToRentRepository implements CarToRentDAO {
     }
 
     @Override
-    public void addCarToFleet(CarToRent car) {
-        CarToRentEntity carToSave = carToRentEntityMapper.mapToEntity(car);
-        carToRentJpaRepository.save(carToSave);
-    }
-
-    @Override
     public List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate) {
         return carToRentJpaRepository.findAvailableCarsByStartEndDate(startDate, endDate).stream()
                 .map(carToRentEntityMapper::mapFromEntity)
@@ -79,7 +70,13 @@ public class CarToRentRepository implements CarToRentDAO {
     }
 
     @Override
-    public void changeCarStatusAfterCustomerReservation(Integer carToRentId, CarStatus carStatus) {
+    public void changeCarStatusByCarId(Integer carToRentId, CarStatus carStatus) {
         carToRentJpaRepository.updateCarStatusByCarToRentId(carToRentId, carStatus);
+    }
+
+    @Override
+    public void addCarToFleet(CarToRent car) {
+        CarToRentEntity carToSave = carToRentEntityMapper.mapToEntity(car);
+        carToRentJpaRepository.save(carToSave);
     }
 }

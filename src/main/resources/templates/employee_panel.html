@@ -39,6 +39,7 @@
                     <th>Color</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th>Total Price</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -73,30 +74,43 @@
                             </td>
                             <td>
                                 <div class="col">
-                                    <a text="Start Date"></a>
+                                    <a th:text="${car.rentalStartDate}"></a>
                                 </div>
                             </td>
                             <td>
                                 <div class="col">
-                                    <a text="End Date"></a>
+                                    <a th:text="${car.rentalEndDate}"></a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col">
+                                    <a th:text="${car.totalPrice}"></a>
                                 </div>
                             </td>
 
+
+
                             <td class="col">
                             <div class="col d-flex justify-content-between">
-                                <form th:action="@{/rent/{carId}(carId=${car.carToRentId})}" method="get">
-                                    <button class="btn btn-success" type="submit" value="[[${car.carToRentId}]]">
-                                        <a class="table-button">Accept</a>
-                                    </button>
+
+                                <form th:action="@{/employee/accept}" method="post" th:object="${rentalOrderId}">
+                                    <input type="hidden" id="rentalOrderId" name="rentalOrderId" th:value="${car.carToRentId}"/>
+                                    <button class="btn btn-success" type="submit"><a class="table-button">Accept</a></button>
                                 </form>
 
-                                <form th:action="@{/rent/{carId}(carId=${car.carToRentId})}" method="get">
+<!--                                <form th:action="@{/rent/accept}" method="get">-->
+<!--                                    <button class="btn btn-success" type="submit" value="[[${car.carToRentId}]]">-->
+<!--                                        <a class="table-button">Accept</a>-->
+<!--                                    </button>-->
+<!--                                </form>-->
+
+                                <form th:action="@{/employee/modify}" method="post">
                                     <button class="btn btn-warning" type="submit" value="[[${car.carToRentId}]]">
                                         <a class="table-button">Modify</a>
                                     </button>
                                 </form>
 
-                                <form th:action="@{/rent/{carId}(carId=${car.carToRentId})}" method="get">
+                                <form th:action="@{/employee/cancel}" method="post">
                                     <button class="btn btn-danger" type="submit" value="[[${car.carToRentId}]]">
                                         <a class="table-button">Cancel</a>
                                     </button>

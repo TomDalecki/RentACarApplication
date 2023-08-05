@@ -3,6 +3,7 @@ package pl.TomDal.RentACarApplication.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
@@ -39,13 +40,19 @@ public class RentalOrderRepository implements RentalOrderDAO {
 
     @Override
     @Transactional
-    public void changeOrderStatus(Integer rentOrderId, OrderStatus orderStatus) {
+    public void changeOrderStatusByOrderId(Integer rentOrderId, OrderStatus orderStatus) {
         rentalOrderJpaRepository.updateOrderStatusByRentalOrderId(orderStatus, rentOrderId);
     }
 
+    // UWAGA TA METODA POWINNA TRAFIĆ DO CarToRentJPA
     @Override
     @Transactional
     public void changeCarToRentStatus(Integer carToRentId, CarStatus carStatus) {
         carToRentJpaRepository.updateCarStatusByCarToRentId(carToRentId, carStatus);
+    }
+
+    @Override
+    public List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus) {
+        return rentalOrderJpaRepository.findOrdersByStatusJoinedWithCars(orderStatus);
     }
 }

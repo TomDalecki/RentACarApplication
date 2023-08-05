@@ -23,74 +23,56 @@
         <h1>Customer Panel</h1>
     </div>
     <br>
-    <br>
 
     <div class="container">
         <div>
-            <h6>See our cars to rent</h6>
+            <h6>Cars to rent</h6>
         </div>
         <div>
             <table class="table">
                 <thead class="table-dark">
+
                     <tr>
                         <th>Brand</th>
                         <th>Model</th>
                         <th>Year</th>
                         <th>Color</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="car : ${availableCarsToRentDTOs}">
+
+                    <tr th:each="car : ${availableCarsToRentInDateDTOs}">
                         <td th:text="${car.brand}" ></td>
                         <td th:text="${car.model}"></td>
                         <td th:text="${car.year}"></td>
                         <td th:text="${car.color}"></td>
+                        <td th:text="${customerRentalOrderDTO.rentalStartDate}"></td>
+                        <td th:text="${customerRentalOrderDTO.rentalEndDate}"></td>
+
+                        <td>
+
+                            <form th:action="@{/saveOrder}" method="post" th:object="${customerRentalOrderDTO}">
+                                <input type="hidden" id="selectedCarToRentId" name="selectedCarToRentId" th:value="${car.carToRentId}"/>
+                                <input type="hidden" id="carType" name="carType" th:value="${car.carType}"/>
+                                <button class="btn btn-success" type="submit"><a class="link-style">Rent</a></button>
+                            </form>
+
+
+
+<!--                            <form th:action="@{/rent/{carId}(carId=${car.carToRentId})}" method="get">-->
+<!--                                <button class="btn btn-success" type="submit" value="[[${car.carToRentId}]]">-->
+<!--                                    <a class="link-style">Rent</a>-->
+<!--                                </button>-->
+<!--                            </form>-->
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-    <br>
-    <div class="container">
-        <h6>Check availability of our cars at your preferred date</h6>
-        <h6>Input email, rental start and end date:</h6>
-    </div>
-            <form th:object="${customerRentalOrderDTO}" th:action="@{/check}" method="post">
-
-            <div class="container">
-            <div class="row">
-                <div class="col">
-                    <label>Email:</label>
-                </div>
-
-                <div class="col">
-                    <label>Start Date:</label>
-                </div>
-
-                <div class="col">
-                    <label>End Date:</label>
-                </div>
-            </div>
-
-        <div class="row">
-            <div class="col-4">
-                    <input type="text" th:field="${customerRentalOrderDTO.customerEmail}" required/>
-            </div>
-
-            <div class="col-4">
-                    <input type="date" th:field="${customerRentalOrderDTO.rentalStartDate}" required/>
-            </div>
-
-            <div class="col-4">
-                    <input type="date" th:field="${customerRentalOrderDTO.rentalEndDate}" required/>
-            </div>
-        </div>
-
-            <br>
-            <button class="btn btn-success" type="submit">Find Available Cars</button>
-        </div>
-        </form>
 
     <br>
     <div class="container">

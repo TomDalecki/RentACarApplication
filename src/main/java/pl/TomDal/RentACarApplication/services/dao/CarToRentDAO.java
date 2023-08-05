@@ -1,6 +1,5 @@
 package pl.TomDal.RentACarApplication.services.dao;
 
-import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
@@ -25,7 +24,7 @@ public interface CarToRentDAO {
 
     List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate);
 
-    void changeCarStatusAfterCustomerReservation(Integer carToRentId, CarStatus carStatus);
+    void changeCarStatusByCarId(Integer carToRentId, CarStatus carStatus);
 
     List<CarToRent> findCarsToRentByCarStatus(CarStatus carStatus);
 }

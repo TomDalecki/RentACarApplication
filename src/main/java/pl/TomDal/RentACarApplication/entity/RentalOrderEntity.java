@@ -59,7 +59,7 @@ public class RentalOrderEntity {
 //    private Set<CarToRentEntity> carsToRent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carToRent_id")
+    @JoinColumn(name = "car_to_rent_id")
     @ToString.Exclude
     private CarToRentEntity carToRent;
 

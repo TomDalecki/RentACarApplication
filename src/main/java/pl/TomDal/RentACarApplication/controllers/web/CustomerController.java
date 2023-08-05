@@ -1,21 +1,17 @@
 package pl.TomDal.RentACarApplication.controllers.web;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CustomerRentalOrderDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.RentalOrderMapper;
-import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
-import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
 import pl.TomDal.RentACarApplication.services.PriceCalculationService;
 import pl.TomDal.RentACarApplication.services.RentalOrderService;
@@ -35,49 +31,56 @@ public class CustomerController {
     private final PriceCalculationService priceCalculationService;
     private final CustomerDAO customerDAO;
     private List<CarToRentDTO> availableCarsToRent;
-    private CarToRentDTO selectedCarDTO;
+    private CustomerRentalOrderDTO customerOrderDTO = new CustomerRentalOrderDTO();
 
     @GetMapping(value = CUSTOMER)
     public String customerPanel(Model model) {
-
-        List<CarToRentDTO> allCars = carToRentService.findAllCars().stream()
+        availableCarsToRent = carToRentService.findAvailableCars().stream()
                 .map(carToRentMapper::mapToDTO).toList();
 
-        List<CarToRentDTO> carsToRent = carToRentService.findAvailableCars().stream()
-                .map(carToRentMapper::mapToDTO).toList();
-        availableCarsToRent = carsToRent;
+        model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
+        model.addAttribute("customerRentalOrderDTO", new CustomerRentalOrderDTO());
 
-        model.addAttribute("allCarsDTOs", allCars);
-        model.addAttribute("availableCarsToRentDTOs", carsToRent);
         return "customer_panel";
     }
 
-    @GetMapping(value = "/rent/{carId}")
-    public ModelAndView rentCar(@PathVariable Integer carId, Model model) {
-        CarToRentDTO carToRentDTO = availableCarsToRent.stream()
-                .filter(car -> car.getCarToRentId().equals(carId)).findFirst().orElse(null);
-        selectedCarDTO = carToRentDTO;
+    @PostMapping("/check")
+    public ModelAndView availableCarsToRentInDate(
+            @ModelAttribute CustomerRentalOrderDTO customerRentalOrderDTO,
+            Model model
+    ){
+            availableCarsToRent = carToRentService
+                    .findAvailableCarsByStartEndDate(customerRentalOrderDTO.getRentalStartDate(),
+                            customerRentalOrderDTO.getRentalEndDate()).stream()
+                .map(carToRentMapper::mapToDTO).toList();
 
-        model.addAttribute("customerRentalOrderDTO", new CustomerRentalOrderDTO());
-        model.addAttribute("selectedCarToRent", carToRentDTO);
-        return new ModelAndView("rent_panel");
+
+        model.addAttribute("availableCarsToRentInDateDTOs", availableCarsToRent);
+        model.addAttribute("customerRentalOrderDTO", customerRentalOrderDTO);
+
+        customerOrderDTO = customerOrderDTO
+                .withCustomerEmail(customerRentalOrderDTO.getCustomerEmail())
+                .withRentalStartDate(customerRentalOrderDTO.getRentalStartDate())
+                .withRentalEndDate(customerRentalOrderDTO.getRentalEndDate());
+
+        return new ModelAndView("choosing_panel");
     }
 
-
-    @PostMapping(value = "/saveOrder")
-    public String saveRentalOrder (
-        @Valid @ModelAttribute("customerRentOrderDTO") CustomerRentalOrderDTO customerRentalOrderDTO)
+    @PostMapping("/saveOrder")
+    public ModelAndView saveRentalOrder (
+        @ModelAttribute CustomerRentalOrderDTO customerRentalOrderDTO, Model model)
     {
-        CarToRent carToRent = carToRentMapper.mapFromDTO(selectedCarDTO);
-        customerRentalOrderDTO = customerRentalOrderDTO
-                .withCarType(carToRent.getCarType())
-                .withSelectedCarToRentId(carToRent.getCarToRentId());
+        model.addAttribute("customerRentalOrderDTO", customerRentalOrderDTO);
 
-        RentalOrder rentalOrder = rentalOrderMapper.mapFromDTO(customerRentalOrderDTO, priceCalculationService, customerDAO);
-        rentalOrder = rentalOrder.withCarToRent(carToRent);
+        customerOrderDTO = customerOrderDTO
+                .withCarType(customerRentalOrderDTO.getCarType())
+                .withSelectedCarToRentId(customerRentalOrderDTO.getSelectedCarToRentId());
+
+        RentalOrder rentalOrder = rentalOrderMapper.mapFromDTO(customerOrderDTO, priceCalculationService, customerDAO);
+
         rentalOrderService.saveRentalOrder(rentalOrder);
-        carToRentService.changeCarStatusAfterCustomerReservation(carToRent.getCarToRentId(), CarStatus.RESERVED);
-        return "rental_order_summary";
+        //carToRentService.changeCarStatusByCarId(rentalOrder.getRentalOrderId(), CarStatus.RESERVED);
+        return new ModelAndView("rental_order_summary");
     }
 }
 

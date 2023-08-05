@@ -4,26 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.TomDal.RentACarApplication.domain.RentalOrder;
-import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
-import java.util.Set;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarToRentDTO {
+public class OrderAndCarDTO {
     Integer carToRentId;
-    String vin;
+    Integer rentalOrderId;
     String carIdNumber;
     CarType carType;
     String brand;
     String model;
     Integer year;
     String color;
-    CarStatus carStatus;
-    Set<RentalOrder> rentalOrders;
+    LocalDate rentalStartDate;
+    LocalDate rentalEndDate;
+    BigDecimal totalPrice;
 
+//    String vin;
+//    String rentNumber;
+//    OffsetDateTime receivedDateTime;
+
+//    OrderStatus orderStatus;
+//    Customer customer;
+//    Employee employee;
 }

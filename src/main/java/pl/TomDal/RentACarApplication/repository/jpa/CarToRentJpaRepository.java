@@ -11,7 +11,6 @@ import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +35,7 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
 
     @Query("""
             SELECT car FROM CarToRentEntity car
-            WHERE car.carType = ?1 and car.carStatus = 'TO_RENT'
+            WHERE car.carType = ?1 AND car.carStatus = 'TO_RENT'
             """)
     List<CarToRentEntity> findAvailableCarsByCarType(CarType carType);
 
@@ -46,10 +45,10 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
             WHERE car.carStatus = 'TO_RENT'
             AND NOT EXISTS (
             SELECT 1
-            FROM RentalHistoryEntity rh
-            WHERE rh.carToRent = car
-            AND ((rh.rentalStartDate <= :endDate AND rh.rentalEndDate >= :startDate)
-            OR (rh.rentalStartDate >= :startDate AND rh.rentalStartDate <= :endDate)))
+            FROM RentalOrderEntity ro
+            WHERE ro.carToRent = car
+            AND ((ro.rentalStartDate <= :endDate AND ro.rentalEndDate >= :startDate)
+            OR (ro.rentalStartDate >= :startDate AND ro.rentalStartDate <= :endDate)))
             """)
     List<CarToRentEntity> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate);
 
@@ -62,5 +61,4 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
             """)
     void updateCarStatusByCarToRentId(@Param("carToRentId") Integer carToRentId,
                                       @Param("carStatus")CarStatus carStatus);
-
 }
