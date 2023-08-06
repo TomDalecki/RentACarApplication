@@ -11,6 +11,7 @@ import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntity, Integer> {
@@ -39,4 +40,14 @@ public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntit
     WHERE ord.orderStatus = :orderStatus
     """)
     List<OrderAndCar> findOrdersByStatusJoinedWithCars(@Param("orderStatus") OrderStatus orderStatus);
+
+    @Query("""
+    SELECT ord.rentalOrderId as rentalOrderId, car.carToRentId as carToRentId, car.carIdNumber as carIdNumber,
+    car.carType as carType, car.brand as brand, car.model as model, car.year as year, car.color as color,
+    ord.rentalStartDate as rentalStartDate, ord.rentalEndDate as rentalEndDate, ord.totalPrice as totalPrice
+    FROM RentalOrderEntity ord
+    INNER JOIN FETCH CarToRentEntity car ON ord.rentalOrderId = car.carToRentId
+    WHERE ord.rentNumber = :rentNumber
+    """)
+    Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(@Param("rentNumber")String rentNumber);
 }

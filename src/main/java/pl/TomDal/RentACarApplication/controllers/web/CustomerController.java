@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CustomerRentalOrderDTO;
+import pl.TomDal.RentACarApplication.controllers.dto.OrderAndCarDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
+import pl.TomDal.RentACarApplication.controllers.dto.mapper.OrderAndCarMapper;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.RentalOrderMapper;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
@@ -30,6 +32,7 @@ public class CustomerController {
     private final RentalOrderService rentalOrderService;
     private final PriceCalculationService priceCalculationService;
     private final CustomerDAO customerDAO;
+    private final OrderAndCarMapper orderAndCarMapper;
     private List<CarToRentDTO> availableCarsToRent;
     private CustomerRentalOrderDTO customerOrderDTO = new CustomerRentalOrderDTO();
 
@@ -77,9 +80,13 @@ public class CustomerController {
                 .withSelectedCarToRentId(customerRentalOrderDTO.getSelectedCarToRentId());
 
         RentalOrder rentalOrder = rentalOrderMapper.mapFromDTO(customerOrderDTO, priceCalculationService, customerDAO);
-
         rentalOrderService.saveRentalOrder(rentalOrder);
-        //carToRentService.changeCarStatusByCarId(rentalOrder.getRentalOrderId(), CarStatus.RESERVED);
+
+        OrderAndCarDTO orderSumary = orderAndCarMapper.mapToDTO(rentalOrderService
+                .findOrderByRentalOrderIdJoinedWithCar(rentalOrder.getRentNumber()).orElseThrow());
+
+        model.addAttribute("orderSumary", orderSumary);
+
         return new ModelAndView("rental_order_summary");
     }
 }

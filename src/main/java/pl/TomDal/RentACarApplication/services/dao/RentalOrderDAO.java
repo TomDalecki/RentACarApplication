@@ -6,6 +6,7 @@ import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RentalOrderDAO {
     void saveRentalOrder(RentalOrder rentalOrder);
@@ -18,4 +19,5 @@ public interface RentalOrderDAO {
 
     List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus);
 
+    Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber);
 }

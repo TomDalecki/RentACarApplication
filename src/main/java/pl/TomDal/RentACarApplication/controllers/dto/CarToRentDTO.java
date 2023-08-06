@@ -24,6 +24,4 @@ public class CarToRentDTO {
     Integer year;
     String color;
     CarStatus carStatus;
-    Set<RentalOrder> rentalOrders;
-
 }

@@ -9,6 +9,7 @@ import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -33,5 +34,9 @@ public class RentalOrderService {
 
     public List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus) {
         return rentalOrderDAO.findOrdersByStatusJoinedWithCars(orderStatus);
+    }
+
+    public Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
+        return rentalOrderDAO.findOrderByRentalOrderIdJoinedWithCar(rentNumber);
     }
 }

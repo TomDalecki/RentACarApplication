@@ -14,6 +14,7 @@ import pl.TomDal.RentACarApplication.repository.mapper.RentalOrderEntityMapper;
 import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -28,7 +29,7 @@ public class RentalOrderRepository implements RentalOrderDAO {
     @Transactional
     public void saveRentalOrder(RentalOrder rentalOrder) {
         RentalOrderEntity rentalOrderEntity = rentalOrderEntityMapper.mapToEntity(rentalOrder);
-        rentalOrderJpaRepository.save(rentalOrderEntity);
+        rentalOrderJpaRepository.saveAndFlush(rentalOrderEntity);
     }
 
     @Override
@@ -54,5 +55,10 @@ public class RentalOrderRepository implements RentalOrderDAO {
     @Override
     public List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus) {
         return rentalOrderJpaRepository.findOrdersByStatusJoinedWithCars(orderStatus);
+    }
+
+    @Override
+    public Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
+        return rentalOrderJpaRepository.findOrderByRentalOrderIdJoinedWithCar(rentNumber);
     }
 }

@@ -88,8 +88,6 @@
                                 </div>
                             </td>
 
-
-
                             <td class="col">
                             <div class="col d-flex justify-content-between">
 
@@ -97,12 +95,6 @@
                                     <input type="hidden" id="rentalOrderId" name="rentalOrderId" th:value="${car.carToRentId}"/>
                                     <button class="btn btn-success" type="submit"><a class="table-button">Accept</a></button>
                                 </form>
-
-<!--                                <form th:action="@{/rent/accept}" method="get">-->
-<!--                                    <button class="btn btn-success" type="submit" value="[[${car.carToRentId}]]">-->
-<!--                                        <a class="table-button">Accept</a>-->
-<!--                                    </button>-->
-<!--                                </form>-->
 
                                 <form th:action="@{/employee/modify}" method="post">
                                     <button class="btn btn-warning" type="submit" value="[[${car.carToRentId}]]">
@@ -127,16 +119,13 @@
         </div>
     </div>
 
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <a th:href="@{/}" class="btn btn-success" role="button">Go back to the main page</a>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a th:href="@{/}" class="btn btn-success" role="button">Go to the main page</a>
+            </div>
         </div>
     </div>
-</div>
     <br>
     <br>
 </body>
