@@ -49,20 +49,10 @@ public class RentalOrderEntity {
     @ToString.Exclude
     private CustomerEntity customer;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinTable(
-//            name = "rental_history",
-//            joinColumns = {@JoinColumn(name = "car_to_rent_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "rental_order_id")}
-//    )
-//    @ToString.Exclude
-//    private Set<CarToRentEntity> carsToRent;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_to_rent_id")
     @ToString.Exclude
     private CarToRentEntity carToRent;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")

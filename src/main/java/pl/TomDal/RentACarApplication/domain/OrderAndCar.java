@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public interface OrderAndCar {
     Integer getRentalOrderId();
-    Integer getCarToRentId();
     String getCarIdNumber();
     CarType getCarType();
     String getBrand();
@@ -17,6 +16,7 @@ public interface OrderAndCar {
     LocalDate getRentalStartDate();
     LocalDate getRentalEndDate();
     BigDecimal getTotalPrice();
+    Integer getCarToRent();
 
 
 //    String vin;

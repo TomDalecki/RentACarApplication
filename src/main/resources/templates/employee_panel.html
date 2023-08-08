@@ -92,20 +92,18 @@
                             <div class="col d-flex justify-content-between">
 
                                 <form th:action="@{/employee/accept}" method="post" th:object="${rentalOrderId}">
-                                    <input type="hidden" id="rentalOrderId" name="rentalOrderId" th:value="${car.carToRentId}"/>
+                                    <input type="hidden" id="rentalOrderAccept" name="rentalOrderId" th:value="${car.rentalOrderId}"/>
                                     <button class="btn btn-success" type="submit"><a class="table-button">Accept</a></button>
                                 </form>
 
                                 <form th:action="@{/employee/modify}" method="post">
-                                    <button class="btn btn-warning" type="submit" value="[[${car.carToRentId}]]">
-                                        <a class="table-button">Modify</a>
-                                    </button>
+                                    <input type="hidden" id="rentalOrderModify" name="rentalOrderId" th:value="${car.rentalOrderId}"/>
+                                    <button class="btn btn-warning" type="submit"><a class="table-button">Modify</a></button>
                                 </form>
 
-                                <form th:action="@{/employee/cancel}" method="post">
-                                    <button class="btn btn-danger" type="submit" value="[[${car.carToRentId}]]">
-                                        <a class="table-button">Cancel</a>
-                                    </button>
+                                <form th:action="@{/employee/cancel}" method="post" th:object="${rentalOrderId}">
+                                    <input type="hidden" id="rentalOrderCancel" name="rentalOrderId" th:value="${car.rentalOrderId}"/>
+                                    <button class="btn btn-danger" type="submit"><a class="table-button">Cancel</a></button>
                                 </form>
                             </div>
                             </td>

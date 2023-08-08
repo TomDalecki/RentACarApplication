@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderAndCarDTO {
-    Integer carToRentId;
     Integer rentalOrderId;
     String carIdNumber;
     CarType carType;
@@ -25,6 +24,7 @@ public class OrderAndCarDTO {
     LocalDate rentalStartDate;
     LocalDate rentalEndDate;
     BigDecimal totalPrice;
+    Integer carToRentId;
 
 //    String vin;
 //    String rentNumber;

@@ -39,18 +39,21 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
             """)
     List<CarToRentEntity> findAvailableCarsByCarType(CarType carType);
 
-    @Query("""
-            SELECT car
-            FROM CarToRentEntity car
-            WHERE car.carStatus = 'TO_RENT'
-            AND NOT EXISTS (
-            SELECT 1
-            FROM RentalOrderEntity ro
-            WHERE ro.carToRent = car
-            AND ((ro.rentalStartDate <= :endDate AND ro.rentalEndDate >= :startDate)
-            OR (ro.rentalStartDate >= :startDate AND ro.rentalStartDate <= :endDate)))
-            """)
+    @Query(value = """
+                SELECT car.* FROM car_to_rent car
+                WHERE car.car_status = 'TO_RENT'
+                AND NOT EXISTS (
+                SELECT 1 FROM rental_order ro
+                WHERE ro.car_to_rent_id = car.car_to_rent_id
+                AND ((ro.order_status <> 'CANCELED')
+                AND ((:startDate >= ro.rental_start_date AND :endDate <= ro.rental_end_date)
+                OR (:startDate <= ro.rental_start_date AND :endDate >= ro.rental_start_date))))
+                  """, nativeQuery = true)
     List<CarToRentEntity> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate);
+
+//    ((ro.rentalStartDate <= :endDate AND ro.rentalEndDate >= :startDate)
+//    OR (ro.rentalStartDate >= :startDate AND ro.rentalStartDate <= :endDate))
+
 
     @Transactional
     @Modifying
@@ -62,3 +65,43 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
     void updateCarStatusByCarToRentId(@Param("carToRentId") Integer carToRentId,
                                       @Param("carStatus")CarStatus carStatus);
 }
+
+// To query działa - pierwotne query, przed zabawami
+//    SELECT car
+//    FROM CarToRentEntity car
+//        WHERE car.carStatus = 'TO_RENT'
+//        AND NOT EXISTS (
+//        SELECT 1
+//        FROM RentalOrderEntity ro
+//        WHERE ro.carToRent = car
+//        AND ((ro.rentalStartDate <= :endDate AND ro.rentalEndDate >= :startDate)
+//        OR (ro.rentalStartDate >= :startDate AND ro.rentalStartDate <= :endDate))
+//        OR ro.orderStatus = 'CANCELED')
+
+// To query nie działa
+//    SELECT car
+//    FROM CarToRentEntity car
+//        LEFT JOIN RentalOrderEntity ro ON car.carToRentId = ro.carToRent
+//        WHERE car.carStatus = 'TO_RENT'
+//        AND (
+//        ro.orderStatus = 'CANCELED'
+//        OR ((ro.rentalStartDate <= :endDate AND ro.rentalEndDate >= :startDate)
+//        OR (ro.rentalStartDate >= :startDate AND ro.rentalStartDate <= :endDate)))
+
+
+//@Query(value = "SELECT car.* " +
+//        "FROM car_to_rent car LEFT JOIN rental_order ro ON car.car_to_rent_id = ro.car_to_rent_id " +
+//        "WHERE car.car_status = 'TO_RENT' " +
+//        "AND (ro.order_status = 'CANCELED' " +
+//        "OR ((ro.rental_start_date < :startDate AND ro.rental_end_date < :endDate) " +
+//        "OR (ro.rental_start_date > :startDate AND ro.rental_start_date > :endDate)));", nativeQuery = true)
+
+//    SELECT car
+//    FROM CarToRentEntity car
+//        WHERE car.carStatus = 'TO_RENT'
+//        AND NOT EXISTS (
+//        SELECT 1
+//        FROM RentalOrderEntity ro
+//        WHERE ro.carToRent = car
+//        AND ((ro.orderStatus = 'CANCELED') OR (ro.rentalStartDate <= :endDate AND ro.rentalEndDate >= :startDate)
+//        OR (ro.rentalStartDate >= :startDate AND ro.rentalStartDate <= :endDate))

@@ -16,10 +16,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarToRentService {
     CarToRentDAO carToRentDAO;
-//
-//    public void changeCarStatusAfterCustomerReservation (Integer carToRentId, CarStatus carStatus){
-//        carToRentDAO.changeCarStatusByCarId(carToRentId, carStatus);
-//    }
 
     public List<CarToRent> findAllCars(){
         return carToRentDAO.findAllCars();

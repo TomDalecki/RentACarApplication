@@ -32,22 +32,30 @@ public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntit
     List<RentalOrderEntity> findOpenRentalOrdersByEmail(String email);
 
     @Query("""
-    SELECT ord.rentalOrderId as rentalOrderId, car.carToRentId as carToRentId, car.carIdNumber as carIdNumber,
-    car.carType as carType, car.brand as brand, car.model as model, car.year as year, car.color as color,
-    ord.rentalStartDate as rentalStartDate, ord.rentalEndDate as rentalEndDate, ord.totalPrice as totalPrice
-    FROM RentalOrderEntity ord
-    INNER JOIN CarToRentEntity car ON ord.rentalOrderId = car.carToRentId
-    WHERE ord.orderStatus = :orderStatus
-    """)
+            SELECT ord.rentalOrderId as rentalOrderId, car.carToRentId as carToRentId, car.carIdNumber as carIdNumber,
+            car.carType as carType, car.brand as brand, car.model as model, car.year as year, car.color as color,
+            ord.rentalStartDate as rentalStartDate, ord.rentalEndDate as rentalEndDate, ord.totalPrice as totalPrice
+            FROM RentalOrderEntity ord
+            INNER JOIN CarToRentEntity car ON ord.carToRent.carToRentId = car.carToRentId
+            WHERE ord.orderStatus = :orderStatus
+            """)
     List<OrderAndCar> findOrdersByStatusJoinedWithCars(@Param("orderStatus") OrderStatus orderStatus);
 
-    @Query("""
-    SELECT ord.rentalOrderId as rentalOrderId, car.carToRentId as carToRentId, car.carIdNumber as carIdNumber,
-    car.carType as carType, car.brand as brand, car.model as model, car.year as year, car.color as color,
-    ord.rentalStartDate as rentalStartDate, ord.rentalEndDate as rentalEndDate, ord.totalPrice as totalPrice
-    FROM RentalOrderEntity ord
-    INNER JOIN FETCH CarToRentEntity car ON ord.rentalOrderId = car.carToRentId
-    WHERE ord.rentNumber = :rentNumber
-    """)
+    @Query(value = """
+            SELECT ord.rental_order_id AS rentalOrderId,
+            car.car_id_number AS carIdNumber,
+            car.car_type AS carType,
+            car.brand AS brand,
+            car.model AS model,
+            car.production_year AS year,
+            car.color AS color,
+            ord.rental_start_date AS rentalStartDate,
+            ord.rental_end_date AS rentalEndDate,
+            ord.total_price AS totalPrice,
+            car.car_to_rent_id AS carToRentId
+            FROM rental_order ord
+            INNER JOIN car_to_rent car ON ord.car_to_rent_id = car.car_to_rent_id
+            WHERE ord.rental_number = :rentNumber
+            """, nativeQuery = true)
     Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(@Param("rentNumber")String rentNumber);
 }

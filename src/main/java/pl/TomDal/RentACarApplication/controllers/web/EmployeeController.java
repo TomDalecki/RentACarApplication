@@ -33,8 +33,20 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/employee/accept")
-    public String reservationStatusChange (Model model, Integer rentalOrderId) {
+    public String reservationStatusAccept (Model model, Integer rentalOrderId) {
         rentalOrderService.changeOrderStatusByOrderId(rentalOrderId, OrderStatus.ACCEPTED);
+        return "redirect:/employee";
+    }
+
+    @PostMapping(value = "/employee/cancel")
+    public String reservationStatusCancel (Model model, Integer rentalOrderId) {
+        rentalOrderService.changeOrderStatusByOrderId(rentalOrderId, OrderStatus.CANCELED);
+        return "redirect:/employee";
+    }
+
+    @PostMapping(value = "/employee/modify")
+    public String reservationStatusModify (Model model, Integer rentalOrderId) {
+
         return "redirect:/employee";
     }
 }

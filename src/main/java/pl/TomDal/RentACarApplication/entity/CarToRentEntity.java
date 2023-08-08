@@ -52,9 +52,6 @@ public class CarToRentEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
     private Set<RentalOrderEntity> rentalOrder;
 
-//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "carsToRent")
-//    private Set<RentalOrderEntity> rentalOrders;
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
