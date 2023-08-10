@@ -1,15 +1,19 @@
 package pl.TomDal.RentACarApplication.controllers.web;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.TomDal.RentACarApplication.controllers.dto.OrderAndCarDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.OrderAndCarMapper;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 import pl.TomDal.RentACarApplication.services.RentalOrderService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -19,16 +23,17 @@ public class EmployeeController {
 
     private final RentalOrderService rentalOrderService;
     private final OrderAndCarMapper orderAndCarMapper;
+    private final LocalDate date = LocalDate.now();
 
     @GetMapping(value = EMPLOYEE)
-    public String employeePanel (Model model, Integer rentalOrderId) {
+    public String employeePanel (Model model) {
 
         List<OrderAndCarDTO> carsBookedByCustomers = rentalOrderService
                 .findOrdersByStatusJoinedWithCars(OrderStatus.NEW_ORDER).stream()
                 .map(orderAndCarMapper::mapToDTO).toList();
 
         model.addAttribute("carsBookedByCustomersDTOs", carsBookedByCustomers);
-        model.addAttribute("rentalOrderId", rentalOrderId);
+        model.addAttribute("date", date);
         return "employee_panel";
     }
 
@@ -45,8 +50,10 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/employee/modify")
-    public String reservationStatusModify (Model model, Integer rentalOrderId) {
+    public String reservationStatusModify (Model model, Integer rentalOrderId, LocalDate newRentalStartDate,
+                                           LocalDate newRentalEndDate) {
 
+        rentalOrderService.changeRentalPeriodByOrderId(rentalOrderId, newRentalStartDate, newRentalEndDate);
         return "redirect:/employee";
     }
 }

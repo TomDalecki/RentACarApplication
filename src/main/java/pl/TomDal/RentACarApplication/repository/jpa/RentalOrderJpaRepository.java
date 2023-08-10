@@ -10,11 +10,19 @@ import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntity, Integer> {
+    @Transactional
+    @Modifying
+    @Query("update RentalOrderEntity r set r.rentalStartDate = ?1, r.rentalEndDate = ?2 where r.rentalOrderId = ?3")
+    int updateRentalStartDateAndRentalEndDateByRentalOrderId(LocalDate rentalStartDate,
+                                                             LocalDate rentalEndDate, Integer rentalOrderId);
+
+
     @Transactional
     @Modifying
     @Query("""

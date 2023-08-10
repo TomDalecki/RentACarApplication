@@ -13,6 +13,7 @@ import pl.TomDal.RentACarApplication.repository.jpa.RentalOrderJpaRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.RentalOrderEntityMapper;
 import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,5 +61,11 @@ public class RentalOrderRepository implements RentalOrderDAO {
     @Override
     public Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
         return rentalOrderJpaRepository.findOrderByRentalOrderIdJoinedWithCar(rentNumber);
+    }
+
+    @Override
+    public void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate, LocalDate newRentalEndDate) {
+        rentalOrderJpaRepository.updateRentalStartDateAndRentalEndDateByRentalOrderId(newRentalStartDate,newRentalEndDate, rentalOrderId);
+
     }
 }

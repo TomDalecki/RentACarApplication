@@ -8,6 +8,7 @@ import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,5 +39,9 @@ public class RentalOrderService {
 
     public Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
         return rentalOrderDAO.findOrderByRentalOrderIdJoinedWithCar(rentNumber);
+    }
+
+    public void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate, LocalDate newRentalEndDate) {
+        rentalOrderDAO.changeRentalPeriodByOrderId(rentalOrderId, newRentalStartDate, newRentalEndDate);
     }
 }

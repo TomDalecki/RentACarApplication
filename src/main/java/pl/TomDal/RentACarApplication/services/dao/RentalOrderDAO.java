@@ -5,6 +5,7 @@ import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,6 @@ public interface RentalOrderDAO {
     List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus);
 
     Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber);
+
+    void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate, LocalDate newRentalEndDate);
 }
