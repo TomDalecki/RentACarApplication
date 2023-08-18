@@ -9,4 +9,6 @@ import pl.TomDal.RentACarApplication.entity.CustomerEntity;
 public interface CustomerEntityMapper {
 
     Customer mapFromEntity(CustomerEntity entity);
+
+    CustomerEntity mapToEntity(Customer customer);
 }

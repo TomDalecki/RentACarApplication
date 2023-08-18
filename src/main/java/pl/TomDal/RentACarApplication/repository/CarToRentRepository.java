@@ -3,7 +3,6 @@ package pl.TomDal.RentACarApplication.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
-import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 import pl.TomDal.RentACarApplication.repository.jpa.CarToRentJpaRepository;
@@ -75,8 +74,7 @@ public class CarToRentRepository implements CarToRentDAO {
     }
 
     @Override
-    public void addCarToFleet(CarToRent car) {
-        CarToRentEntity carToSave = carToRentEntityMapper.mapToEntity(car);
-        carToRentJpaRepository.save(carToSave);
+    public void saveCar(CarToRent car) {
+        carToRentJpaRepository.save(carToRentEntityMapper.mapToEntity(car));
     }
 }

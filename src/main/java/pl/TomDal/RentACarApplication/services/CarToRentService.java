@@ -3,6 +3,8 @@ package pl.TomDal.RentACarApplication.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
+import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CarToRentService {
     CarToRentDAO carToRentDAO;
+    CarToRentMapper carToRentMapper;
 
     public List<CarToRent> findAllCars(){
         return carToRentDAO.findAllCars();
@@ -49,12 +52,12 @@ public class CarToRentService {
     }
 
     @Transactional
-    public void addCarToFleet(CarToRent carToRent){
-        carToRentDAO.addCarToFleet(carToRent);
+    public void changeCarStatusByCarId(Integer reservedCarId, CarStatus carStatus) {
+        carToRentDAO.changeCarStatusByCarId(reservedCarId, carStatus);
     }
 
     @Transactional
-    public void changeCarStatusByCarId(Integer reservedCarId, CarStatus carStatus) {
-        carToRentDAO.changeCarStatusByCarId(reservedCarId, carStatus);
+    public void saveCar(CarToRentDTO carToRentDTO) {
+        carToRentDAO.saveCar(carToRentMapper.mapFromDTO(carToRentDTO));
     }
 }

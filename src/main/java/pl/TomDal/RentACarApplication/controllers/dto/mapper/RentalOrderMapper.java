@@ -1,6 +1,7 @@
 package pl.TomDal.RentACarApplication.controllers.dto.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import pl.TomDal.RentACarApplication.controllers.dto.CustomerRentalOrderDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.RentalOrderDTO;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
@@ -12,7 +13,7 @@ import pl.TomDal.RentACarApplication.services.dao.CustomerDAO;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RentalOrderMapper {
 
     RentalOrderDTO mapToDTO(final RentalOrder rentalOrder);

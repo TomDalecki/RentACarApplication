@@ -6,7 +6,7 @@ CREATE TABLE car_to_rent
     car_type        VARCHAR(30)    NOT NULL,
     brand           VARCHAR(30)    NOT NULL,
     model           VARCHAR(30)    NOT NULL,
-    production_year SMALLINT       NOT NULL,
+    production_year INT       NOT NULL,
     color           VARCHAR(30)    NOT NULL,
     car_status      VARCHAR(30)    NOT NULL,
 
