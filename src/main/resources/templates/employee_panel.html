@@ -72,7 +72,7 @@
                                         data-target="#myModal" data-rentalOrderId="${car.rentalOrderId}">
                                     <a class="table-button">Modify</a>
                                 </button>
-                           </form>
+                            </form>
 
                             <form th:action="@{/employee/cancel}" method="post">
                                 <input type="hidden" name="rentalOrderId" th:value="${car.rentalOrderId}"/>
