@@ -17,4 +17,5 @@ public class EmployeeDTO {
     String name;
     String surname;
     String pesel;
+    String email;
 }

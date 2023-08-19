@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.TomDal.RentACarApplication.controllers.dto.*;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
+import pl.TomDal.RentACarApplication.entity.enums.CarColor;
 import pl.TomDal.RentACarApplication.entity.enums.CarProducer;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
@@ -53,11 +54,15 @@ public class AdminController {
         CarProducer[] carProducers = CarProducer.values();
         Arrays.sort(carProducers, Comparator.comparing(Enum::name));
 
+        CarColor[] carColors = CarColor.values();
+        Arrays.sort(carColors, Comparator.comparing(Enum::name));
+
         model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
         model.addAttribute("carsWithTechnicalIssueDTOs", carsWithTechnicalIssue);
         model.addAttribute("carsWithInsuranceIssueDTOs", carsWithInsuranceIssue);
         model.addAttribute("carTypes", carTypes);
         model.addAttribute("carProducers", carProducers);
+        model.addAttribute("carColors", carColors);
         model.addAttribute("carToRentDTO", carToRentDTO);
 
         return "admin_panel";

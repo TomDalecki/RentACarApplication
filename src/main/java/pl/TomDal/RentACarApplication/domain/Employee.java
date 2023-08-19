@@ -15,5 +15,6 @@ public class Employee {
     String name;
     String surname;
     String pesel;
+    String email;
     Set<RentalOrder> rentalOrders;
 }
