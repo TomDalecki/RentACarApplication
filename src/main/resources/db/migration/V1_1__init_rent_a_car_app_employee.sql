@@ -4,6 +4,7 @@ CREATE TABLE employee
     name        VARCHAR(30) NOT NULL,
     surname     VARCHAR(30) NOT NULL,
     pesel       VARCHAR(30) NOT NULL,
+    email       VARCHAR(30) NOT NULL,
     PRIMARY KEY (employee_id),
     UNIQUE (pesel)
 );
