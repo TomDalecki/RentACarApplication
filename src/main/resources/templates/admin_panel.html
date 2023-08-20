@@ -111,8 +111,6 @@
         </div>
     </div>
 
-
-
     <div class="container">
         <div class="row">
             <form th:action="@{/admin/saveCar}" method="post">
@@ -145,7 +143,7 @@
                         <div class="form-group">
                             <label for="carType">Car Type</label>
                             <select type="text" class="form-control" id="carType" name="carType" th:field="*{carType}" required>
-                                <option value="">-- Wybierz wartość --</option>
+                                <option value="">-- Choose a value --</option>
                                 <option th:each="p : ${carTypes}" th:value="${p}" th:text="${p}"></option>
                             </select>
                         </div>
@@ -153,7 +151,7 @@
                         <div class="form-group">
                             <label for="brand">Brand</label>
                             <select type="text" class="form-control" id="brand" name="brand" th:field="*{brand}" required>
-                                <option value="">-- Wybierz wartość --</option>
+                                <option value="">-- Choose a value --</option>
                                 <option th:each="p : ${carProducers}" th:value="${p}" th:text="${p}"></option>
                             </select>
                         </div>
@@ -170,7 +168,10 @@
 
                         <div class="form-group">
                             <label for="color">Color</label>
-                            <input type="text" class="form-control" id="color" name="color" th:field="*{color}" required>
+                            <select type="text" class="form-control" id="color" name="color" th:field="*{color}" required>
+                                <option value="">-- Choose a value --</option>
+                                <option th:each="p : ${carColors}" th:value="${p}" th:text="${p}"></option>
+                            </select>
                         </div>
 
                         <div class="modal-footer">

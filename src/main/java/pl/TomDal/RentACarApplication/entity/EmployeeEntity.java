@@ -31,6 +31,9 @@ public class EmployeeEntity {
     @Column(name = "pesel", unique = true)
     private String pesel;
 
+    @Column(name = "email", unique = true)
+    private String email;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

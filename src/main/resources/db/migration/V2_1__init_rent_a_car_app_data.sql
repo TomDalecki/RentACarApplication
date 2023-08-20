@@ -1,16 +1,16 @@
-insert into EMPLOYEE (name, surname, pesel)
+insert into EMPLOYEE (name, surname, pesel, email)
 values
-('Andrzej', 'Pracownik_1', '65104561458'),
-('Wojtek', 'Pracownik_2', '78052468945'),
-('Tomasz', 'Pracownik_3', '62021258518'),
-('Łuksz', 'Pracownik_4', '88072945852');
+('Andrzej', 'Pracownik_1', '65104561458', 'empl1@pl'),
+('Wojtek', 'Pracownik_2', '78052468945', 'empl2@pl'),
+('Tomasz', 'Pracownik_3', '62021258518', 'empl3@pl'),
+('Łuksz', 'Pracownik_4', '88072945852', 'empl4@pl');
 
 insert into CUSTOMER (customer_id, name, surname, phone, email)
 values
-('1', 'Piotr', 'Wynajmujący_1', '603604605', 'piotr@com.pl'),
-('2', 'Jarosław', 'Wynajmujący_2', '525868985', 'jarek@com.pl'),
-('3', 'Karol', 'Wynajmujący_3', '236589456', 'karol@com.pl'),
-('4', 'Justyna', 'Wynajmujący_4', '996995993', 'justyna@com.pl');
+('1', 'Piotr', 'Wynajmujący_1', '603604605', 'piotr@pl'),
+('2', 'Jarosław', 'Wynajmujący_2', '525868985', 'jarek@pl'),
+('3', 'Karol', 'Wynajmujący_3', '236589456', 'karol@pl'),
+('4', 'Justyna', 'Wynajmujący_4', '996995993', 'justyna@pl');
 
 insert into CAR_TO_RENT (car_to_rent_id, vin, car_id_number, car_type, brand, model, production_year, color, car_status)
 values
