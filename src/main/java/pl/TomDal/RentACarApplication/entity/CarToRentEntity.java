@@ -50,7 +50,7 @@ public class CarToRentEntity {
     private CarStatus carStatus;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
-    private Set<RentalOrderEntity> rentalOrder;
+    private Set<RentalOrderEntity> rentalOrders;
 
     @Override
     public final boolean equals(Object o) {

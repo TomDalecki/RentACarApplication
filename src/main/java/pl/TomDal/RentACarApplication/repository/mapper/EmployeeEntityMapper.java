@@ -30,5 +30,6 @@ public interface EmployeeEntityMapper {
     @Mapping(target = "employee", ignore = true)
     RentalOrder mapFromEntity(RentalOrderEntity entity);
 
+    @Mapping(target = "rentalOrders", ignore = true)
     EmployeeEntity mapToEntity(Employee employee);
 }
