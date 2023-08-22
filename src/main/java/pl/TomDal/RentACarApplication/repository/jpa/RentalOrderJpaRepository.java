@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.domain.OrderAndCar;
+import pl.TomDal.RentACarApplication.entity.EmployeeEntity;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
@@ -19,18 +20,18 @@ public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntit
     @Transactional
     @Modifying
     @Query("update RentalOrderEntity r set r.rentalStartDate = ?1, r.rentalEndDate = ?2 where r.rentalOrderId = ?3")
-    int updateRentalStartDateAndRentalEndDateByRentalOrderId(LocalDate rentalStartDate,
+    void updateRentalStartDateAndRentalEndDateByRentalOrderId(LocalDate rentalStartDate,
                                                              LocalDate rentalEndDate, Integer rentalOrderId);
-
 
     @Transactional
     @Modifying
     @Query("""
             UPDATE RentalOrderEntity r
-            SET r.orderStatus = :orderStatus
+            SET r.orderStatus = :orderStatus, r.employee = :employeeEntity
             WHERE r.rentalOrderId = :rentalOrderId""")
     void updateOrderStatusByRentalOrderId(@Param("orderStatus") OrderStatus orderStatus,
-                                          @Param("rentalOrderId") Integer rentalOrderId);
+                                          @Param("rentalOrderId") Integer rentalOrderId,
+                                          @Param("employeeEntity") EmployeeEntity employeeEntity);
 
     @Query("""
             SELECT ord FROM RentalOrderEntity ord

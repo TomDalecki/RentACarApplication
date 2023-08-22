@@ -7,8 +7,8 @@ import pl.TomDal.RentACarApplication.controllers.dto.RentalOrderDTO;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
+import pl.TomDal.RentACarApplication.services.CustomerService;
 import pl.TomDal.RentACarApplication.services.PriceCalculationService;
-import pl.TomDal.RentACarApplication.services.dao.CustomerDAO;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -20,7 +20,7 @@ public interface RentalOrderMapper {
 
     default RentalOrder mapFromDTO(CustomerRentalOrderDTO customerRentalOrderDTO,
                                    PriceCalculationService priceCalculationService,
-                                   CustomerDAO customerDAO)
+                                   CustomerService customerService)
     {
         return RentalOrder.builder()
                 .rentNumber(UUID.randomUUID().toString())
@@ -32,7 +32,7 @@ public interface RentalOrderMapper {
                         customerRentalOrderDTO.getRentalEndDate(),
                         customerRentalOrderDTO.getCarType()))
                 .orderStatus(OrderStatus.NEW_ORDER)
-                .customer(customerDAO.findCustomerByEmail(customerRentalOrderDTO.getCustomerEmail()).orElse(null))
+                .customer(customerService.findCustomerByEmail(customerRentalOrderDTO.getCustomerEmail()).orElse(null))
                 .carToRent(CarToRent.builder().carToRentId(customerRentalOrderDTO.getSelectedCarToRentId()).build())
                 .build();
     }

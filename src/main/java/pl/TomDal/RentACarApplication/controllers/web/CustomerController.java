@@ -1,6 +1,8 @@
 package pl.TomDal.RentACarApplication.controllers.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +17,9 @@ import pl.TomDal.RentACarApplication.controllers.dto.mapper.OrderAndCarMapper;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.RentalOrderMapper;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
+import pl.TomDal.RentACarApplication.services.CustomerService;
 import pl.TomDal.RentACarApplication.services.PriceCalculationService;
 import pl.TomDal.RentACarApplication.services.RentalOrderService;
-import pl.TomDal.RentACarApplication.services.dao.CustomerDAO;
 
 import java.util.List;
 
@@ -31,19 +33,23 @@ public class CustomerController {
     private final RentalOrderMapper rentalOrderMapper;
     private final RentalOrderService rentalOrderService;
     private final PriceCalculationService priceCalculationService;
-    private final CustomerDAO customerDAO;
+    private final CustomerService customerService;
     private final OrderAndCarMapper orderAndCarMapper;
     private List<CarToRentDTO> availableCarsToRent;
-    private CustomerRentalOrderDTO customerOrderDTO = new CustomerRentalOrderDTO();
+    private final CustomerRentalOrderDTO customerOrderDTO = new CustomerRentalOrderDTO();
 
     @GetMapping(value = CUSTOMER)
     public String customerPanel(Model model) {
         availableCarsToRent = carToRentService.findAvailableCars().stream()
                 .map(carToRentMapper::mapToDTO).toList();
 
-        model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
-        model.addAttribute("customerRentalOrderDTO", new CustomerRentalOrderDTO());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userEmail = authentication.getName();
+        customerOrderDTO.setCustomerEmail(authentication.getName());
 
+        model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
+        model.addAttribute("customerRentalOrderDTO", customerOrderDTO);
+//        model.addAttribute("userEmail", userEmail);
         return "customer_panel";
     }
 
@@ -61,10 +67,8 @@ public class CustomerController {
         model.addAttribute("availableCarsToRentInDateDTOs", availableCarsToRent);
         model.addAttribute("customerRentalOrderDTO", customerRentalOrderDTO);
 
-        customerOrderDTO = customerOrderDTO
-                .withCustomerEmail(customerRentalOrderDTO.getCustomerEmail())
-                .withRentalStartDate(customerRentalOrderDTO.getRentalStartDate())
-                .withRentalEndDate(customerRentalOrderDTO.getRentalEndDate());
+        customerOrderDTO.setRentalStartDate(customerRentalOrderDTO.getRentalStartDate());
+        customerOrderDTO.setRentalEndDate(customerRentalOrderDTO.getRentalEndDate());
 
         return new ModelAndView("choosing_panel");
     }
@@ -75,11 +79,10 @@ public class CustomerController {
     {
         model.addAttribute("customerRentalOrderDTO", customerRentalOrderDTO);
 
-        customerOrderDTO = customerOrderDTO
-                .withCarType(customerRentalOrderDTO.getCarType())
-                .withSelectedCarToRentId(customerRentalOrderDTO.getSelectedCarToRentId());
+        customerOrderDTO.setCarType(customerRentalOrderDTO.getCarType());
+        customerOrderDTO.setSelectedCarToRentId(customerRentalOrderDTO.getSelectedCarToRentId());
 
-        RentalOrder rentalOrder = rentalOrderMapper.mapFromDTO(customerOrderDTO, priceCalculationService, customerDAO);
+        RentalOrder rentalOrder = rentalOrderMapper.mapFromDTO(customerOrderDTO, priceCalculationService, customerService);
         rentalOrderService.saveRentalOrder(rentalOrder);
 
         OrderAndCarDTO orderSumary = orderAndCarMapper.mapToDTO(rentalOrderService

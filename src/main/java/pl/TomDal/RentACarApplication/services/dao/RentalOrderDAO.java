@@ -1,5 +1,6 @@
 package pl.TomDal.RentACarApplication.services.dao;
 
+import pl.TomDal.RentACarApplication.domain.Employee;
 import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
@@ -14,7 +15,7 @@ public interface RentalOrderDAO {
 
     List<RentalOrder> findOpenRentalOrdersByEmail(String email);
 
-    void changeOrderStatusByOrderId(Integer rentOrderId, OrderStatus orderStatus);
+    void changeOrderStatusByOrderId(Integer rentOrderId, OrderStatus orderStatus, Employee employee);
 
     void changeCarToRentStatus(Integer carToRentId, CarStatus carStatus);
 

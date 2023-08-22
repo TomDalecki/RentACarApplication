@@ -34,7 +34,7 @@ public class EmployeeEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<RentalOrderEntity> rentalOrders;

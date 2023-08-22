@@ -54,35 +54,35 @@
     <br>
     <div class="container">
         <h6>Check availability of our cars at your preferred date</h6>
-        <h6>Input email, rental start and end date:</h6>
+        <h6>Input rental start and end date:</h6>
     </div>
             <form th:object="${customerRentalOrderDTO}" th:action="@{/check}" method="post">
 
             <div class="container">
             <div class="row">
-                <div class="col">
-                    <label>Email:</label>
-                </div>
+<!--                <div class="col-2">-->
+<!--                    <label>Email:</label>-->
+<!--                </div>-->
 
-                <div class="col">
+                <div class="col-2">
                     <label>Start Date:</label>
                 </div>
 
-                <div class="col">
+                <div class="col-2">
                     <label>End Date:</label>
                 </div>
             </div>
 
         <div class="row">
-            <div class="col-4">
-                    <input type="text" th:field="${customerRentalOrderDTO.customerEmail}" required/>
-            </div>
+<!--            <div class="col-2">-->
+<!--                <input type="text" th:field="${customerRentalOrderDTO.userEmail}" required/>-->
+<!--            </div>-->
 
-            <div class="col-4">
+            <div class="col-2">
                     <input type="date" th:field="${customerRentalOrderDTO.rentalStartDate}" required/>
             </div>
 
-            <div class="col-4">
+            <div class="col-2">
                     <input type="date" th:field="${customerRentalOrderDTO.rentalEndDate}" required/>
             </div>
         </div>

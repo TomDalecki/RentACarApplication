@@ -7,6 +7,8 @@ import pl.TomDal.RentACarApplication.repository.jpa.EmployeeJpaRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.EmployeeEntityMapper;
 import pl.TomDal.RentACarApplication.services.dao.EmployeeDAO;
 
+import java.util.Optional;
+
 @Repository
 @AllArgsConstructor
 public class EmployeeRepository implements EmployeeDAO {
@@ -17,5 +19,11 @@ public class EmployeeRepository implements EmployeeDAO {
     @Override
     public void saveEmployee(Employee employee) {
         employeeJpaRepository.save(employeeEntityMapper.mapToEntity(employee));
+    }
+
+    @Override
+    public Optional<Employee> findEmployeeByEmail(String email) {
+        return employeeJpaRepository.findByEmail(email)
+                .map(employeeEntityMapper::mapFromEntity);
     }
 }

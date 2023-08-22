@@ -11,7 +11,6 @@ import pl.TomDal.RentACarApplication.entity.enums.CarType;
 import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

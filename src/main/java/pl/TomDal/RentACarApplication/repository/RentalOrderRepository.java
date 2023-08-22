@@ -3,13 +3,16 @@ package pl.TomDal.RentACarApplication.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.TomDal.RentACarApplication.domain.Employee;
 import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
+import pl.TomDal.RentACarApplication.entity.EmployeeEntity;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 import pl.TomDal.RentACarApplication.repository.jpa.CarToRentJpaRepository;
 import pl.TomDal.RentACarApplication.repository.jpa.RentalOrderJpaRepository;
+import pl.TomDal.RentACarApplication.repository.mapper.EmployeeEntityMapper;
 import pl.TomDal.RentACarApplication.repository.mapper.RentalOrderEntityMapper;
 import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
@@ -24,6 +27,7 @@ public class RentalOrderRepository implements RentalOrderDAO {
     private final CarToRentJpaRepository carToRentJpaRepository;
     private final RentalOrderJpaRepository rentalOrderJpaRepository;
     private final RentalOrderEntityMapper rentalOrderEntityMapper;
+    private final EmployeeEntityMapper employeeEntityMapper;
 
 
     @Override
@@ -42,8 +46,9 @@ public class RentalOrderRepository implements RentalOrderDAO {
 
     @Override
     @Transactional
-    public void changeOrderStatusByOrderId(Integer rentOrderId, OrderStatus orderStatus) {
-        rentalOrderJpaRepository.updateOrderStatusByRentalOrderId(orderStatus, rentOrderId);
+    public void changeOrderStatusByOrderId(Integer rentOrderId, OrderStatus orderStatus, Employee employee) {
+        EmployeeEntity employeeEntity = employeeEntityMapper.mapToEntity(employee);
+        rentalOrderJpaRepository.updateOrderStatusByRentalOrderId(orderStatus, rentOrderId, employeeEntity);
     }
 
     // UWAGA TA METODA POWINNA TRAFIĆ DO CarToRentJPA
