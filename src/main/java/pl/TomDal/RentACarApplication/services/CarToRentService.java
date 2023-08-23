@@ -8,6 +8,7 @@ import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
+import pl.TomDal.RentACarApplication.exceptions.NotFoundException;
 import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
 
 import java.time.LocalDate;
@@ -39,16 +40,16 @@ public class CarToRentService {
     public List<CarToRent> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate){
         return carToRentDAO.findAvailableCarsByStartEndDate(startDate, endDate);
     }
-    public Optional<CarToRent> findByCarIdNumber(String carIdNumber){
+
+    public CarToRent findByCarIdNumber(String carIdNumber){
         Optional<CarToRent> car = carToRentDAO.findByCarIdNumber(carIdNumber);
-        System.out.println("Car by IdNumber: " + car.orElseThrow());
-        return car;
+        return car.orElseThrow(
+                ()->new NotFoundException("Could not find the car with IdNumber: [%s]".formatted(carIdNumber)));
     }
 
-    public Optional<CarToRent> findByVin(String vin){
+    public CarToRent findByVin(String vin){
         Optional<CarToRent> car = carToRentDAO.findByVin(vin);
-        System.out.println("Car by VIN: " + car.orElseThrow());
-        return car;
+        return car.orElseThrow(()->new NotFoundException("Could not find the car with VIN: [%s]".formatted(vin)));
     }
 
     @Transactional

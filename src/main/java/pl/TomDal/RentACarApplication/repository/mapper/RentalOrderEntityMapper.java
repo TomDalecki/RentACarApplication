@@ -1,7 +1,6 @@
 package pl.TomDal.RentACarApplication.repository.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;

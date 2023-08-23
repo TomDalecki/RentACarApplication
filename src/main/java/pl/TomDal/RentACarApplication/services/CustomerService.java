@@ -6,9 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.controllers.dto.CustomerDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CustomerMapper;
 import pl.TomDal.RentACarApplication.domain.Customer;
+import pl.TomDal.RentACarApplication.exceptions.NotFoundException;
 import pl.TomDal.RentACarApplication.services.dao.CustomerDAO;
-
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -16,8 +15,9 @@ public class CustomerService {
     CustomerDAO customerDAO;
     CustomerMapper customerMapper;
 
-    public Optional<Customer> findCustomerByEmail(String email){
-        return customerDAO.findCustomerByEmail(email);
+    public Customer findCustomerByEmail(String email){
+        return customerDAO.findCustomerByEmail(email).orElseThrow(
+                ()->new NotFoundException("Could not find customer with email: [%s]".formatted(email)));
     }
 
     @Transactional

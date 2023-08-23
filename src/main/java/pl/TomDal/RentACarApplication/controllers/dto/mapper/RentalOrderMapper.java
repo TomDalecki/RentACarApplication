@@ -32,7 +32,7 @@ public interface RentalOrderMapper {
                         customerRentalOrderDTO.getRentalEndDate(),
                         customerRentalOrderDTO.getCarType()))
                 .orderStatus(OrderStatus.NEW_ORDER)
-                .customer(customerService.findCustomerByEmail(customerRentalOrderDTO.getCustomerEmail()).orElse(null))
+                .customer(customerService.findCustomerByEmail(customerRentalOrderDTO.getCustomerEmail()))
                 .carToRent(CarToRent.builder().carToRentId(customerRentalOrderDTO.getSelectedCarToRentId()).build())
                 .build();
     }

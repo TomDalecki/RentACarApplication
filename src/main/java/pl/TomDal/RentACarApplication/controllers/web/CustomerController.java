@@ -86,7 +86,7 @@ public class CustomerController {
         rentalOrderService.saveRentalOrder(rentalOrder);
 
         OrderAndCarDTO orderSumary = orderAndCarMapper.mapToDTO(rentalOrderService
-                .findOrderByRentalOrderIdJoinedWithCar(rentalOrder.getRentNumber()).orElseThrow());
+                .findOrderByRentalOrderIdJoinedWithCar(rentalOrder.getRentNumber()));
 
         model.addAttribute("orderSumary", orderSumary);
 

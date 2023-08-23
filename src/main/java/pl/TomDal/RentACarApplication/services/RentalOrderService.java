@@ -9,11 +9,11 @@ import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
+import pl.TomDal.RentACarApplication.exceptions.NotFoundException;
 import pl.TomDal.RentACarApplication.services.dao.RentalOrderDAO;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +27,7 @@ public class RentalOrderService {
 
     public void changeOrderStatusByOrderId (Integer rentOrderId, OrderStatus orderStatus){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Employee employee = employeeService.findEmployeeByEmail(authentication.getName()).orElseThrow();
+        Employee employee = employeeService.findEmployeeByEmail(authentication.getName());
         rentalOrderDAO.changeOrderStatusByOrderId(rentOrderId, orderStatus, employee);
     }
 
@@ -43,8 +43,10 @@ public class RentalOrderService {
         return rentalOrderDAO.findOrdersByStatusJoinedWithCars(orderStatus);
     }
 
-    public Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
-        return rentalOrderDAO.findOrderByRentalOrderIdJoinedWithCar(rentNumber);
+    public OrderAndCar findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
+        return rentalOrderDAO.findOrderByRentalOrderIdJoinedWithCar(rentNumber).orElseThrow(
+                ()->new NotFoundException("Could not find the order with rental number: [%s]".formatted(rentNumber))
+        );
     }
 
     public void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate, LocalDate newRentalEndDate) {
