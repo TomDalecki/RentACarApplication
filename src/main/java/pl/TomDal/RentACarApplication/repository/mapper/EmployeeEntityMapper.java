@@ -14,22 +14,8 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EmployeeEntityMapper {
-
-
-    @Mapping(source = "rentalOrders", target = "rentalOrders", qualifiedByName = "mapRentalOrders")
+    @Mapping(target = "rentalOrders", ignore = true)
     Employee mapFromEntity(EmployeeEntity entity);
 
-    @Named("mapRentalOrders")
-    @SuppressWarnings("unused")
-    default Set<RentalOrder> mapRentalOrders(Set<RentalOrderEntity> rentalOrderEntities) {
-        return rentalOrderEntities.stream().map(this::mapFromEntity).collect(Collectors.toSet());
-    }
-
-    @Mapping(target = "carToRent", ignore = true)
-    @Mapping(target = "customer", ignore = true)
-    @Mapping(target = "employee", ignore = true)
-    RentalOrder mapFromEntity(RentalOrderEntity entity);
-
-    @Mapping(target = "rentalOrders", ignore = true)
     EmployeeEntity mapToEntity(Employee employee);
 }
