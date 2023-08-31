@@ -37,7 +37,7 @@ UPDATE employee SET user_id = 9 WHERE email = 'empl4@pl';
 
 insert into security_role (role_id, role) values (1, 'ADMIN'), (2, 'EMPLOYEE'), (3, 'USER');
 
-insert into security_user_role (user_id, role_id) values (1, 1);
+insert into security_user_role (user_id, role_id) values (1, 1), (1, 2), (1, 3);
 insert into security_user_role (user_id, role_id) values (2, 3), (3, 3), (4, 3), (5, 3);
 insert into security_user_role (user_id, role_id) values (6, 2), (7, 2), (8, 2), (9, 2);
 
