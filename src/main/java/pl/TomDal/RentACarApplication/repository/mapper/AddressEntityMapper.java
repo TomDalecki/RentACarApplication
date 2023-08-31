@@ -10,4 +10,6 @@ import pl.TomDal.RentACarApplication.entity.AddressEntity;
 public interface AddressEntityMapper {
     @Mapping(target = "customers", ignore = true)
     Address mapFromEntity(AddressEntity entity);
+
+    AddressEntity mapToEntity(Address address);
 }

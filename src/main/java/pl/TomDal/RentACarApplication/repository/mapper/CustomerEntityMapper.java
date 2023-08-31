@@ -9,6 +9,7 @@ import pl.TomDal.RentACarApplication.entity.CustomerEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerEntityMapper {
 
+    @Mapping(target = "address", ignore = true)
     Customer mapFromEntity(CustomerEntity entity);
 
     CustomerEntity mapToEntity(Customer customer);
