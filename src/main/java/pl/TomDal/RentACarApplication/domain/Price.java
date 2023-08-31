@@ -7,12 +7,13 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @With
+@Getter
 @Value
 @Builder
 @EqualsAndHashCode
 @ToString
-public class PriceList {
-    Integer priceListId;
+public class Price {
+    Integer priceId;
     BigDecimal price;
     OffsetDateTime priceDate;
     CarType carType;

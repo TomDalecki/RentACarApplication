@@ -4,17 +4,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import pl.TomDal.RentACarApplication.entity.PriceListEntity;
+import pl.TomDal.RentACarApplication.entity.PriceEntity;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
 import java.util.Optional;
 
 @Repository
-public interface PriceListJpaRepository extends JpaRepository<PriceListEntity, Integer> {
+public interface PriceJpaRepository extends JpaRepository<PriceEntity, Integer> {
 
     @Query("""
-            SELECT p FROM PriceListEntity p
+            SELECT p FROM PriceEntity p
             WHERE p.carType = :carType ORDER BY p.priceDate DESC
             LIMIT 1""")
-    Optional<PriceListEntity> findLatestPriceByCarTypeOrderByPriceDateDesc(@Param("carType") CarType carType);
+    Optional<PriceEntity> findLatestPriceByCarTypeOrderByPriceDateDesc(@Param("carType") CarType carType);
 }

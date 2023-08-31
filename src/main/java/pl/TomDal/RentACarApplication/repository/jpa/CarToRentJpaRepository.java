@@ -3,7 +3,6 @@ package pl.TomDal.RentACarApplication.repository.jpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.entity.CarToRentEntity;
@@ -16,6 +15,11 @@ import java.util.Optional;
 
 @Repository
 public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, Integer> {
+
+    void deleteByVin(String vin);
+
+    CarToRentEntity findByCarToRentId(Integer carToRentId);
+
     Optional<CarToRentEntity> findByCarIdNumber(String carIdNumber);
 
     Optional<CarToRentEntity> findByVin(String vin);
@@ -52,12 +56,11 @@ public interface CarToRentJpaRepository extends JpaRepository<CarToRentEntity, I
     List<CarToRentEntity> findAvailableCarsByStartEndDate(LocalDate startDate, LocalDate endDate);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE CarToRentEntity c
             SET c.carStatus = :carStatus
             WHERE c.carToRentId = :carToRentId
             """)
-    void updateCarStatusByCarToRentId(@Param("carToRentId") Integer carToRentId,
-                                      @Param("carStatus")CarStatus carStatus);
+    void updateCarStatusByCarToRentId(Integer carToRentId, CarStatus carStatus);
 }

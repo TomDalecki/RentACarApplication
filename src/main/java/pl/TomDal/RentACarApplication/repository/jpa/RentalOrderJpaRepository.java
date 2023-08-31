@@ -18,13 +18,13 @@ import java.util.Optional;
 @Repository
 public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntity, Integer> {
     @Transactional
-    @Modifying
-    @Query("update RentalOrderEntity r set r.rentalStartDate = ?1, r.rentalEndDate = ?2 where r.rentalOrderId = ?3")
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE RentalOrderEntity r SET r.rentalStartDate = ?1, r.rentalEndDate = ?2 where r.rentalOrderId = ?3")
     void updateRentalStartDateAndRentalEndDateByRentalOrderId(LocalDate rentalStartDate,
                                                              LocalDate rentalEndDate, Integer rentalOrderId);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE RentalOrderEntity r
             SET r.orderStatus = :orderStatus, r.employee = :employeeEntity

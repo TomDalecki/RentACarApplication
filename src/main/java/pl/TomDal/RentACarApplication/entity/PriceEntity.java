@@ -15,12 +15,12 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "price_list")
-public class PriceListEntity {
+public class PriceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "price_id")
-    private Integer priceListId;
+    private Integer priceId;
 
     @Column(name = "price")
     private BigDecimal price;
