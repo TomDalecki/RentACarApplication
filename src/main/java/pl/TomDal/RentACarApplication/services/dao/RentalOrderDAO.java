@@ -3,7 +3,6 @@ package pl.TomDal.RentACarApplication.services.dao;
 import pl.TomDal.RentACarApplication.domain.Employee;
 import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
-import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
 import java.time.LocalDate;
@@ -17,11 +16,9 @@ public interface RentalOrderDAO {
 
     void changeOrderStatusByOrderId(Integer rentOrderId, OrderStatus orderStatus, Employee employee);
 
-    void changeCarToRentStatus(Integer carToRentId, CarStatus carStatus);
-
     List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus);
 
-    Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber);
+    Optional<OrderAndCar> findOrderByRentalOrderNumberJoinedWithCar(String rentNumber);
 
     void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate, LocalDate newRentalEndDate);
 }

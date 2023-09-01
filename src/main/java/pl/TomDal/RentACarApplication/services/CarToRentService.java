@@ -53,8 +53,8 @@ public class CarToRentService {
     }
 
     @Transactional
-    public void changeCarStatusByCarId(Integer reservedCarId, CarStatus carStatus) {
-        carToRentDAO.changeCarStatusByCarId(reservedCarId, carStatus);
+    public void changeCarStatusByCarId(Integer carToRentId, CarStatus carStatus) {
+        carToRentDAO.changeCarStatusByCarId(carToRentId, carStatus);
     }
 
     @Transactional

@@ -8,9 +8,7 @@ import pl.TomDal.RentACarApplication.domain.OrderAndCar;
 import pl.TomDal.RentACarApplication.domain.RentalOrder;
 import pl.TomDal.RentACarApplication.entity.EmployeeEntity;
 import pl.TomDal.RentACarApplication.entity.RentalOrderEntity;
-import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
-import pl.TomDal.RentACarApplication.repository.jpa.CarToRentJpaRepository;
 import pl.TomDal.RentACarApplication.repository.jpa.RentalOrderJpaRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.EmployeeEntityMapper;
 import pl.TomDal.RentACarApplication.repository.mapper.RentalOrderEntityMapper;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 @Repository
 @AllArgsConstructor
 public class RentalOrderRepository implements RentalOrderDAO {
-    private final CarToRentJpaRepository carToRentJpaRepository;
+
     private final RentalOrderJpaRepository rentalOrderJpaRepository;
     private final RentalOrderEntityMapper rentalOrderEntityMapper;
     private final EmployeeEntityMapper employeeEntityMapper;
@@ -34,7 +32,7 @@ public class RentalOrderRepository implements RentalOrderDAO {
     @Transactional
     public void saveRentalOrder(RentalOrder rentalOrder) {
         RentalOrderEntity rentalOrderEntity = rentalOrderEntityMapper.mapToEntity(rentalOrder);
-        rentalOrderJpaRepository.saveAndFlush(rentalOrderEntity);
+        rentalOrderJpaRepository.save(rentalOrderEntity);
     }
 
     @Override
@@ -51,26 +49,30 @@ public class RentalOrderRepository implements RentalOrderDAO {
         rentalOrderJpaRepository.updateOrderStatusByRentalOrderId(orderStatus, rentOrderId, employeeEntity);
     }
 
-    // UWAGA TA METODA POWINNA TRAFIĆ DO CarToRentJPA
-    @Override
-    @Transactional
-    public void changeCarToRentStatus(Integer carToRentId, CarStatus carStatus) {
-        carToRentJpaRepository.updateCarStatusByCarToRentId(carToRentId, carStatus);
-    }
-
     @Override
     public List<OrderAndCar> findOrdersByStatusJoinedWithCars(OrderStatus orderStatus) {
         return rentalOrderJpaRepository.findOrdersByStatusJoinedWithCars(orderStatus);
     }
 
     @Override
-    public Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(String rentNumber) {
-        return rentalOrderJpaRepository.findOrderByRentalOrderIdJoinedWithCar(rentNumber);
+    public Optional<OrderAndCar> findOrderByRentalOrderNumberJoinedWithCar(String rentNumber) {
+        return rentalOrderJpaRepository.findOrderByRentalOrderNumberJoinedWithCar(rentNumber);
     }
 
     @Override
-    public void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate, LocalDate newRentalEndDate) {
-        rentalOrderJpaRepository.updateRentalStartDateAndRentalEndDateByRentalOrderId(newRentalStartDate,newRentalEndDate, rentalOrderId);
+    public void changeRentalPeriodByOrderId(Integer rentalOrderId, LocalDate newRentalStartDate,
+                                            LocalDate newRentalEndDate) {
+        rentalOrderJpaRepository.updateRentalStartDateAndRentalEndDateByRentalOrderId(newRentalStartDate,
+                newRentalEndDate, rentalOrderId);
 
+    }
+
+    public List<RentalOrder> findAll() {
+        return rentalOrderJpaRepository.findAll().stream()
+                .map(rentalOrderEntityMapper::mapFromEntity).collect(Collectors.toList());
+    }
+
+    public Optional<RentalOrder> findRentalOrderById(Integer rentalOrderId) {
+        return rentalOrderJpaRepository.findById(rentalOrderId).map(rentalOrderEntityMapper::mapFromEntity);
     }
 }

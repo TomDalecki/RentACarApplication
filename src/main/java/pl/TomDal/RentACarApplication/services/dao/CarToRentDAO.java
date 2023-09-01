@@ -27,4 +27,6 @@ public interface CarToRentDAO {
     void changeCarStatusByCarId(Integer carToRentId, CarStatus carStatus);
 
     List<CarToRent> findCarsToRentByCarStatus(CarStatus carStatus);
+
+    Optional<CarToRent> findCarToRentByCarId(Integer carToRentId);
 }

@@ -2,6 +2,7 @@ package pl.TomDal.RentACarApplication.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
@@ -69,12 +70,24 @@ public class CarToRentRepository implements CarToRentDAO {
     }
 
     @Override
+    public Optional<CarToRent> findCarToRentByCarId(Integer carToRentId) {
+        return Optional.ofNullable(carToRentEntityMapper
+                .mapFromEntity(carToRentJpaRepository.findByCarToRentId(carToRentId)));
+    }
+
+    @Override
+    @Transactional
     public void changeCarStatusByCarId(Integer carToRentId, CarStatus carStatus) {
         carToRentJpaRepository.updateCarStatusByCarToRentId(carToRentId, carStatus);
     }
 
     @Override
+    @Transactional
     public void saveCar(CarToRent car) {
         carToRentJpaRepository.save(carToRentEntityMapper.mapToEntity(car));
+    }
+
+    public void deleteCar(CarToRent car){
+        carToRentJpaRepository.deleteByVin(car.getVin());
     }
 }

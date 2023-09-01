@@ -35,8 +35,6 @@ public class AdminController {
     private final EmployeeService employeeService;
     private final CarToRentMapper carToRentMapper;
 
-
-
     @GetMapping(value = ADMIN)
     public String adminPanel(Model model, CarToRentDTO carToRentDTO) {
 

@@ -18,20 +18,20 @@ import java.util.Optional;
 @Repository
 public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntity, Integer> {
     @Transactional
-    @Modifying(clearAutomatically = true)
+    @Modifying(clearAutomatically = true, flushAutomatically=true)
     @Query("UPDATE RentalOrderEntity r SET r.rentalStartDate = ?1, r.rentalEndDate = ?2 where r.rentalOrderId = ?3")
     void updateRentalStartDateAndRentalEndDateByRentalOrderId(LocalDate rentalStartDate,
                                                              LocalDate rentalEndDate, Integer rentalOrderId);
 
     @Transactional
-    @Modifying(clearAutomatically = true)
+    @Modifying(clearAutomatically = true, flushAutomatically=true)
     @Query("""
             UPDATE RentalOrderEntity r
             SET r.orderStatus = :orderStatus, r.employee = :employeeEntity
             WHERE r.rentalOrderId = :rentalOrderId""")
-    void updateOrderStatusByRentalOrderId(@Param("orderStatus") OrderStatus orderStatus,
-                                          @Param("rentalOrderId") Integer rentalOrderId,
-                                          @Param("employeeEntity") EmployeeEntity employeeEntity);
+    void updateOrderStatusByRentalOrderId(OrderStatus orderStatus,
+                                          Integer rentalOrderId,
+                                          EmployeeEntity employeeEntity);
 
     @Query("""
             SELECT ord FROM RentalOrderEntity ord
@@ -66,5 +66,5 @@ public interface RentalOrderJpaRepository extends JpaRepository<RentalOrderEntit
             INNER JOIN car_to_rent car ON ord.car_to_rent_id = car.car_to_rent_id
             WHERE ord.rental_number = :rentNumber
             """, nativeQuery = true)
-    Optional<OrderAndCar> findOrderByRentalOrderIdJoinedWithCar(@Param("rentNumber")String rentNumber);
+    Optional<OrderAndCar> findOrderByRentalOrderNumberJoinedWithCar(@Param("rentNumber")String rentNumber);
 }
