@@ -44,12 +44,10 @@ public class CustomerController {
                 .map(carToRentMapper::mapToDTO).toList();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userEmail = authentication.getName();
         customerOrderDTO.setCustomerEmail(authentication.getName());
 
         model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
         model.addAttribute("customerRentalOrderDTO", customerOrderDTO);
-//        model.addAttribute("userEmail", userEmail);
         return "customer_panel";
     }
 
