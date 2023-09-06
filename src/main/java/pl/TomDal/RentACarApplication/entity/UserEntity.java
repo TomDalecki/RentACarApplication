@@ -1,4 +1,4 @@
-package pl.TomDal.RentACarApplication.security;
+package pl.TomDal.RentACarApplication.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

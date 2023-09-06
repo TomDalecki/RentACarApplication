@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.TomDal.RentACarApplication.entity.RoleEntity;
+import pl.TomDal.RentACarApplication.entity.UserEntity;
+import pl.TomDal.RentACarApplication.services.dao.UserDAO;
 
 import java.util.List;
 import java.util.Set;
@@ -20,12 +23,12 @@ import java.util.stream.Collectors;
 @Service
 public class RentACarAppUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserDAO userDAO;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userEmail) {
-        final UserEntity user = userRepository.findByEmail(userEmail);
+        final UserEntity user = userDAO.findByEmail(userEmail);
         if (user == null) {
             log.warn("user not found: {}", userEmail);
             throw new UsernameNotFoundException("User " + userEmail + " not found");
@@ -36,7 +39,7 @@ public class RentACarAppUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> getUserAuthority(Set<RoleEntity> userRoles) {
         return userRoles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
+                .map(role -> new SimpleGrantedAuthority(role.getUserRole().toString()))
                 .distinct()
                 .collect(Collectors.toList());
     }

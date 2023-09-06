@@ -1,10 +1,11 @@
-package pl.TomDal.RentACarApplication.security;
+package pl.TomDal.RentACarApplication.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.TomDal.RentACarApplication.entity.enums.UserRole;
 
 
 @Data
@@ -21,6 +22,9 @@ public class RoleEntity {
     private int id;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
+//    @ManyToMany(mappedBy = "roles")
+//    private Set<UserEntity> userEntities;
 }

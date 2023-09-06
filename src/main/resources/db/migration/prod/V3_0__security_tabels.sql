@@ -4,8 +4,11 @@ CREATE TABLE security_user
     email     VARCHAR(32)   NOT NULL,
     password  VARCHAR(128)  NOT NULL,
     active    BOOLEAN       NOT NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id),
+    UNIQUE (email)
 );
+
+ALTER SEQUENCE security_user_user_id_seq RESTART WITH 100;
 
 CREATE TABLE security_role
 (
@@ -13,6 +16,8 @@ CREATE TABLE security_role
     role    VARCHAR(20) NOT NULL,
     PRIMARY KEY (role_id)
 );
+
+ALTER SEQUENCE security_role_role_id_seq RESTART WITH 100;
 
 CREATE TABLE security_user_role
 (

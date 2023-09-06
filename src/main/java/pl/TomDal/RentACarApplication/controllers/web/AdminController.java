@@ -7,18 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.TomDal.RentACarApplication.controllers.dto.AddressDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
-import pl.TomDal.RentACarApplication.controllers.dto.CustomerDTO;
-import pl.TomDal.RentACarApplication.controllers.dto.EmployeeDTO;
+import pl.TomDal.RentACarApplication.controllers.dto.CredentialDetailsDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
-import pl.TomDal.RentACarApplication.entity.enums.CarColor;
-import pl.TomDal.RentACarApplication.entity.enums.CarProducer;
-import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
-import pl.TomDal.RentACarApplication.entity.enums.CarType;
+import pl.TomDal.RentACarApplication.entity.enums.*;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
 import pl.TomDal.RentACarApplication.services.CustomerService;
 import pl.TomDal.RentACarApplication.services.EmployeeService;
+import pl.TomDal.RentACarApplication.services.UserService;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -34,6 +30,7 @@ public class AdminController {
     private final CarToRentService carToRentService;
     private final EmployeeService employeeService;
     private final CarToRentMapper carToRentMapper;
+    private final UserService userService;
 
     @GetMapping(value = ADMIN)
     public String adminPanel(Model model, CarToRentDTO carToRentDTO) {
@@ -65,6 +62,8 @@ public class AdminController {
         model.addAttribute("carProducers", carProducers);
         model.addAttribute("carColors", carColors);
         model.addAttribute("carToRentDTO", carToRentDTO);
+        model.addAttribute("credentialDetailsDTO", new CredentialDetailsDTO());
+
 
         return "admin_panel";
     }
@@ -77,14 +76,14 @@ public class AdminController {
     }
 
     @PostMapping(value = "/admin/saveCustomer")
-    public String saveNewCustomer(CustomerDTO customerDTO, AddressDTO addressDTO) {
-        customerService.saveCustomer(customerDTO);
-        return "new_customer_summary";
+    public String saveNewCustomer(@Valid @ModelAttribute CredentialDetailsDTO credentialDetailsDTO) {
+        userService.createUser(credentialDetailsDTO.getEmail(), credentialDetailsDTO.getPassword(), UserRole.USER);
+        return "redirect:/admin";
     }
 
     @PostMapping(value = "/admin/saveEmployee")
-    public String saveNewEmployee(EmployeeDTO employeeDTO) {
-        employeeService.saveEmployee(employeeDTO);
-        return "new_employee_summary";
+    public String saveNewEmployee(@Valid @ModelAttribute CredentialDetailsDTO credentialDetailsDTO) {
+        userService.createUser(credentialDetailsDTO.getEmail(), credentialDetailsDTO.getPassword(), UserRole.EMPLOYEE);
+        return "redirect:/admin";
     }
 }
