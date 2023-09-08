@@ -18,4 +18,5 @@ public class CustomerDTO {
     String phone;
     String email;
     Address address;
+
 }
