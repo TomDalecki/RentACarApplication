@@ -1,17 +1,18 @@
-package pl.TomDal.RentACarApplication.domain;
+package pl.TomDal.RentACarApplication.controllers.dto;
 
 import lombok.*;
+import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.InsuranceCompanies;
 import pl.TomDal.RentACarApplication.entity.enums.InsuranceType;
 
 import java.time.LocalDate;
 
 @With
-@Value
+@Data
 @Builder
-@EqualsAndHashCode(of = "insuranceNumber")
-@ToString
-public class CarInsurance {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CarInsuranceDTO {
 
     Integer carInsuranceId;
     InsuranceCompanies insuranceCompany;
@@ -19,6 +20,5 @@ public class CarInsurance {
     String insuranceNumber;
     LocalDate insuranceStartDate;
     LocalDate insuranceEndDate;
-    @ToString.Exclude
     CarToRent carToRent;
 }

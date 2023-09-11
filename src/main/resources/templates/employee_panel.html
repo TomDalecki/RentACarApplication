@@ -94,7 +94,7 @@
                                 <div class="modal-body">
                                     <form th:action="@{/employee/modify}" method="post">
 
-                                        <input type="hidden" name="rentalOrderId" th:value="${car.rentalOrderId}"/>
+
                                         <div class="form-group">
                                             <label for="newRentalStartDate">New rental start date:</label>
                                             <input type="date" class="form-control" id="newRentalStartDate" name="newRentalStartDate" th:value="${date}" required>

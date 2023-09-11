@@ -10,4 +10,6 @@ import pl.TomDal.RentACarApplication.entity.CarInsuranceEntity;
 public interface CarInsuranceEntityMapper {
     @Mapping(target = "carToRent", ignore = true)
     CarInsurance mapFromEntity(CarInsuranceEntity entity);
+
+    CarInsuranceEntity mapToEntity(CarInsurance carInsurance);
 }

@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ModelAndView handleException(MethodArgumentNotValidException ex) {
-        String message = String.format("Bad request for field: [%s], wrong value: [%s], Nieprawidłowy format adresu email",
+        String message = String.format("Bad request for field: [%s], wrong value: [%s]",
                 Optional.ofNullable(ex.getFieldError()).map(FieldError::getField).orElse(null),
                 Optional.ofNullable(ex.getFieldError()).map(FieldError::getRejectedValue).orElse(null));
         log.error(message, ex);

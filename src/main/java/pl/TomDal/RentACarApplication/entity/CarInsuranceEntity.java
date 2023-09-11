@@ -3,9 +3,10 @@ package pl.TomDal.RentACarApplication.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import pl.TomDal.RentACarApplication.entity.enums.InsuranceCompanies;
 import pl.TomDal.RentACarApplication.entity.enums.InsuranceType;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 @ToString
 @Getter
@@ -24,7 +25,7 @@ public class CarInsuranceEntity {
 
     @Column(name = "insurance_company")
     @Enumerated(EnumType.STRING)
-    private InsuranceType insuranceCompany;
+    private InsuranceCompanies insuranceCompany;
 
     @Column(name = "insurance_type")
     @Enumerated(EnumType.STRING)
@@ -34,10 +35,10 @@ public class CarInsuranceEntity {
     private String insuranceNumber;
 
     @Column(name = "insurance_start_date")
-    private OffsetDateTime insuranceStartDate;
+    private LocalDate insuranceStartDate;
 
     @Column(name = "insurance_end_date")
-    private OffsetDateTime insuranceEndDate;
+    private LocalDate insuranceEndDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_to_rent_id")

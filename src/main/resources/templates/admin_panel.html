@@ -39,7 +39,7 @@
                 <tr>
                     <th>Brand</th>
                     <th>Model</th>
-                    <th>Id Number</th>
+                    <th>Car Id Number</th>
                     <th>Year</th>
                     <th>Color</th>
                 </tr>
@@ -68,8 +68,9 @@
                 <tr>
                     <th>Brand</th>
                     <th>Model</th>
-                    <th>Id Number</th>
+                    <th>Car Id Number</th>
                     <th>Year</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +79,14 @@
                     <td th:text="${car.model}"></td>
                     <td th:text="${car.carIdNumber}"></td>
                     <td th:text="${car.year}"></td>
+                    <td class="col">
+                        <form th:action="@{/admin/updateTechIssue}" method="post">
+                            <button class="btn btn-warning" type="button" data-toggle="modal"
+                                    data-target="#technicalIssueUpdateModal" data-rentalOrderId="${car.rentalOrderId}">
+                                <a class="table-button">Update</a>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -95,8 +104,11 @@
                 <tr>
                     <th>Brand</th>
                     <th>Model</th>
-                    <th>Id Number</th>
-                    <th>Year</th>
+                    <th>Car Id Number</th>
+                    <th>Insurance Type</th>
+                    <th>Expired Date</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,9 +116,88 @@
                     <td th:text="${car.brand}" ></td>
                     <td th:text="${car.model}"></td>
                     <td th:text="${car.carIdNumber}"></td>
-                    <td th:text="${car.year}"></td>
+                    <td text="Value"></td>
+                    <td text="Value"></td>
+
+                    <td class="col">
+                        <form th:action="@{/admin/updateInsurance}" method="post">
+                            <button class="btn btn-warning" type="button" data-toggle="modal"
+                                    data-target="#updateInsuranceModal" data-rentalOrderId="${car.carToRentId}">
+                                <a class="table-button">Update</a>
+                            </button>
+                        </form>
+                    </td>
+
+                    <td class="col">
+                        <form th:action="@{/admin/saveInsurance}" method="post">
+                            <button class="btn btn-warning" type="button" data-toggle="modal"
+                                    data-target="#saveInsuranceModal" data-carToRentId="${car.carToRentId}">
+                                <a class="table-button">Save New</a>
+                            </button>
+                        </form>
+                    </td>
+
+                    <!-- Modal Insurance Issue Modal-->
+                    <div class="modal fade" id="saveInsuranceModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Insurance policy - Save new</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form th:action="@{/admin/saveInsurance}" method="post" th:object="${carInsuranceDTO}">
+
+                                        <input type="hidden" name="carToRentId" th:value="${car.carToRentId}">
+
+                                        <div class="form-group">
+                                            <label for="insuranceCompany">Insurance Company</label>
+                                            <select type="text" class="form-control" id="insuranceCompany" name="insuranceCompany" th:field="*{insuranceCompany}" required>
+                                                <option value="">-- Choose a value --</option>
+                                                <option th:each="p : ${insuranceCompanies}" th:value="${p}" th:text="${p}"></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="insuranceType">Insurance Type (OC/AC)</label>
+                                            <select type="text" class="form-control" id="insuranceType" name="insuranceType" th:field="*{insuranceType}" required>
+                                                <option value="">-- Choose a value --</option>
+                                                <option th:each="p : ${insuranceType}" th:value="${p}" th:text="${p}"></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="insuranceNumber">Insurance Number</label>
+                                            <input type="text" class="form-control" id="insuranceNumber" name="insuranceNumber" th:field="*{insuranceNumber}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="insuranceStartDate">Insurance Start Date</label>
+                                            <input type="date" class="form-control" id="insuranceStartDate" name="insuranceStartDate" th:field="*{insuranceStartDate}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="insuranceEndDate">Insurance End Date</label>
+                                            <input type="date" class="form-control" id="insuranceEndDate" name="insuranceEndDate" th:field="*{insuranceEndDate}" required>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
                 </tr>
-                </tbody>
             </table>
         </div>
     </div>
@@ -267,7 +358,40 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Technical Issue Update-->
+        <div class="modal fade" id="technicalIssueUpdateModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Technical issue update</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form th:action="@{/admin/updateTechIssue}" method="post" th:object="${credentialDetailsDTO}">
+
+                            <div class="form-group">
+                                <label for="customerEmail">Email</label>
+                                <input type="text" class="form-control" id="technicalIssue" name="email" th:field="*{email}" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
+
+
     <br>
     <div class="container">
         <div class="row">

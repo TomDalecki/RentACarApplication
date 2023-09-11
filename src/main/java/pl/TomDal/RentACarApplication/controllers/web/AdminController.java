@@ -7,14 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.TomDal.RentACarApplication.controllers.dto.CarInsuranceDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CredentialDetailsDTO;
+import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarInsuranceMapper;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
+import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.*;
-import pl.TomDal.RentACarApplication.services.CarToRentService;
-import pl.TomDal.RentACarApplication.services.CustomerService;
-import pl.TomDal.RentACarApplication.services.EmployeeService;
-import pl.TomDal.RentACarApplication.services.UserService;
+import pl.TomDal.RentACarApplication.services.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -31,6 +31,8 @@ public class AdminController {
     private final EmployeeService employeeService;
     private final CarToRentMapper carToRentMapper;
     private final UserService userService;
+    private final InsuranceService insuranceService;
+    private final CarInsuranceMapper carInsuranceMapper;
 
     @GetMapping(value = ADMIN)
     public String adminPanel(Model model, CarToRentDTO carToRentDTO) {
@@ -55,22 +57,30 @@ public class AdminController {
         CarColor[] carColors = CarColor.values();
         Arrays.sort(carColors, Comparator.comparing(Enum::name));
 
+        InsuranceType[] insuranceType = InsuranceType.values();
+        Arrays.sort(insuranceType, Comparator.comparing(Enum::name));
+
+        InsuranceCompanies[] insuranceCompanies = InsuranceCompanies.values();
+        Arrays.sort(insuranceCompanies, Comparator.comparing(Enum::name));
+
         model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
         model.addAttribute("carsWithTechnicalIssueDTOs", carsWithTechnicalIssue);
         model.addAttribute("carsWithInsuranceIssueDTOs", carsWithInsuranceIssue);
         model.addAttribute("carTypes", carTypes);
         model.addAttribute("carProducers", carProducers);
         model.addAttribute("carColors", carColors);
+        model.addAttribute("insuranceType", insuranceType);
+        model.addAttribute("insuranceCompanies", insuranceCompanies);
         model.addAttribute("carToRentDTO", carToRentDTO);
         model.addAttribute("credentialDetailsDTO", new CredentialDetailsDTO());
-
+        model.addAttribute("carInsuranceDTO", new CarInsuranceDTO());
 
         return "admin_panel";
     }
 
     @PostMapping(value = "/admin/saveCar")
     public String saveNewCar(@Valid @ModelAttribute CarToRentDTO carToRentDTO) {
-        carToRentDTO.setCarStatus(CarStatus.TO_RENT);
+        carToRentDTO.setCarStatus(CarStatus.DISABLED_BY_INSURANCE);
         carToRentService.saveCar(carToRentDTO);
         return "redirect:/admin";
     }
@@ -85,5 +95,20 @@ public class AdminController {
     public String saveNewEmployee(@Valid @ModelAttribute CredentialDetailsDTO credentialDetailsDTO) {
         userService.createUser(credentialDetailsDTO.getEmail(), credentialDetailsDTO.getPassword(), UserRole.EMPLOYEE);
         return "redirect:/admin";
+    }
+
+    @PostMapping(value = "/admin/saveInsurance")
+    public String updateInsuranceDate(@Valid @ModelAttribute CarInsuranceDTO carInsuranceDTO, Integer carToRentId) {
+        insuranceService.saveInsurance(carInsuranceMapper.mapFromDTO(carInsuranceDTO
+                .withCarToRent(CarToRent.builder().carToRentId(carToRentId).build())));
+         return "redirect:/admin";
+    }
+
+    @PostMapping(value = "/admin/updateTechIssue")
+    public String updateTechnicalIssueStatus(Integer carToRentId) {
+        //carToRentService.updateTechnicalStatus(carToRentId, carStatus);
+
+        return "redirect:/admin";
+
     }
 }
