@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/carToRent/**").permitAll()
                         .requestMatchers("/customer/**", "/check/**", "/saveOrder/**").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/employee/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/insurance/**").hasAnyAuthority("EMPLOYEE", "ADMIN")
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         )
                 .formLogin(Customizer.withDefaults())

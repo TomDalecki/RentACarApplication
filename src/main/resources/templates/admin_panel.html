@@ -12,7 +12,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"-->
+<!--            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
 
     <style>
         body{
@@ -21,6 +22,7 @@
         background-size: cover;
         }
     </style>
+
     <title>Rent A Car Application</title>
 </head>
 
@@ -42,6 +44,7 @@
                     <th>Car Id Number</th>
                     <th>Year</th>
                     <th>Color</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,6 +54,16 @@
                     <td th:text="${car.carIdNumber}"></td>
                     <td th:text="${car.year}"></td>
                     <td th:text="${car.color}"></td>
+                    <td class="col">
+
+                        <form th:action="@{/insurance/insuranceDetails}" method="get">
+                            <input type="hidden" name="carToRentId" th:value="${car.carToRentId}">
+                            <button class="btn btn-warning" type="submit">
+                                <a class="table-button">Insurance Details</a>
+                            </button>
+                        </form>
+
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -120,19 +133,19 @@
                     <td text="Value"></td>
 
                     <td class="col">
-                        <form th:action="@{/admin/updateInsurance}" method="post">
-                            <button class="btn btn-warning" type="button" data-toggle="modal"
-                                    data-target="#updateInsuranceModal" data-rentalOrderId="${car.carToRentId}">
-                                <a class="table-button">Update</a>
+                        <form th:action="@{/insurance/insuranceDetails}" method="get">
+                            <input type="hidden" name="carToRentId" th:value="${car.carToRentId}">
+                            <button class="btn btn-warning" type="submit">
+                                <a class="table-button">Insurance Details</a>
                             </button>
                         </form>
                     </td>
 
                     <td class="col">
-                        <form th:action="@{/admin/saveInsurance}" method="post">
+                        <form th:action="@{/insurance/saveInsurance}" method="post">
                             <button class="btn btn-warning" type="button" data-toggle="modal"
                                     data-target="#saveInsuranceModal" data-carToRentId="${car.carToRentId}">
-                                <a class="table-button">Save New</a>
+                                <a class="table-button">Save New Insurance</a>
                             </button>
                         </form>
                     </td>
@@ -148,7 +161,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form th:action="@{/admin/saveInsurance}" method="post" th:object="${carInsuranceDTO}">
+                                    <form th:action="@{/insurance/saveInsurance}" method="post" th:object="${carInsuranceDTO}">
 
                                         <input type="hidden" name="carToRentId" th:value="${car.carToRentId}">
 
@@ -298,7 +311,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title">Credential details </h4>
+                        <h4 class="modal-title">Insert credential details for new <br> customer</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -332,7 +345,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title">Credential details </h4>
+                        <h4 class="modal-title">Insert credential details for new employee</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -359,33 +372,33 @@
             </div>
         </div>
 
-        <!-- Modal Technical Issue Update-->
-        <div class="modal fade" id="technicalIssueUpdateModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+<!--        &lt;!&ndash; Modal Technical Issue Update&ndash;&gt;-->
+<!--        <div class="modal fade" id="technicalIssueUpdateModal">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
 
-                    <div class="modal-header">
-                        <h4 class="modal-title">Technical issue update</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
+<!--                    <div class="modal-header">-->
+<!--                        <h4 class="modal-title">Technical issue update</h4>-->
+<!--                        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                    </div>-->
 
-                    <div class="modal-body">
-                        <form th:action="@{/admin/updateTechIssue}" method="post" th:object="${credentialDetailsDTO}">
+<!--                    <div class="modal-body">-->
+<!--                        <form th:action="@{/admin/updateTechIssue}" method="post" th:object="${credentialDetailsDTO}">-->
 
-                            <div class="form-group">
-                                <label for="customerEmail">Email</label>
-                                <input type="text" class="form-control" id="technicalIssue" name="email" th:field="*{email}" required>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="customerEmail">Email</label>-->
+<!--                                <input type="date" class="form-control" id="technicalIssue" name="tech" th:field="*{tech}" required>-->
+<!--                            </div>-->
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--                            <div class="modal-footer">-->
+<!--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                                <button type="submit" class="btn btn-success">Save</button>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
 

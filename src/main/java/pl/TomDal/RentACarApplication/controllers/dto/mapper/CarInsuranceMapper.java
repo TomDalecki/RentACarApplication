@@ -9,4 +9,5 @@ import pl.TomDal.RentACarApplication.domain.CarInsurance;
 public interface CarInsuranceMapper {
 
     CarInsurance mapFromDTO(CarInsuranceDTO carInsuranceDTO);
+    CarInsuranceDTO mapToDTO(CarInsurance carInsurance);
 }

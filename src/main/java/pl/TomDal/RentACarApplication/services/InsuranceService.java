@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import pl.TomDal.RentACarApplication.domain.CarInsurance;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.InsuranceType;
+import pl.TomDal.RentACarApplication.repository.CarInsuranceRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.CarInsuranceEntityMapper;
 import pl.TomDal.RentACarApplication.services.dao.InsuranceDAO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class InsuranceService {
     InsuranceDAO insuranceDAO;
     CarInsuranceEntityMapper carInsuranceEntityMapper;
     CarToRentService carToRentService;
+    CarInsuranceRepository carInsuranceRepository;
 
     @Transactional
     public void saveInsurance(CarInsurance carInsurance) {
@@ -33,22 +36,36 @@ public class InsuranceService {
 
                 latestCarInsurance = carInsuranceList.stream()
                         .filter(insurance -> insurance.getInsuranceType().equals(InsuranceType.AC))
-                        .max(Comparator.comparing(CarInsurance::getCarInsuranceId)).orElseThrow();
+                        .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElseThrow();
 
             } else {
                 latestCarInsurance = carInsuranceList.stream()
                         .filter(insurance -> insurance.getInsuranceType().equals(InsuranceType.OC))
-                        .max(Comparator.comparing(CarInsurance::getCarInsuranceId)).orElseThrow();
+                        .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElseThrow();
 
             }
             if (latestCarInsurance.getInsuranceEndDate().isAfter(LocalDate.now())) {
-                changeCarStatus(carInsurance);
+                carToRentService.changeCarStatusByCarId(carInsurance.getCarToRent().getCarToRentId(),
+                        CarStatus.TO_RENT);
             }
         }
     }
 
-    private void changeCarStatus(CarInsurance carInsurance) {
-        carToRentService.changeCarStatusByCarId(carInsurance.getCarToRent().getCarToRentId(),
-                CarStatus.TO_RENT);
+    public List<CarInsurance> findInsurances(Integer carId) {
+        List<CarInsurance> carInsurances = new ArrayList<>();
+        List<CarInsurance> carInsuranceByCarId = insuranceDAO.findCarInsuranceByCarId(carId);
+
+        CarInsurance AC_Insurance = carInsuranceByCarId.stream()
+                .filter(insurance -> insurance.getInsuranceType().equals(InsuranceType.AC))
+                .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElse(null);
+
+        CarInsurance OC_Insurance = carInsuranceByCarId.stream()
+                .filter(insurance -> insurance.getInsuranceType().equals(InsuranceType.OC))
+                .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElse(null);;
+
+        carInsurances.add(AC_Insurance);
+        carInsurances.add(OC_Insurance);
+
+        return carInsurances;
     }
 }

@@ -40,10 +40,9 @@ public class CarInsuranceEntity {
     @Column(name = "insurance_end_date")
     private LocalDate insuranceEndDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_to_rent_id")
     @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private CarToRentEntity carToRent;
 
     @Override

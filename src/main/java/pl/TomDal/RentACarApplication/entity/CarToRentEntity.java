@@ -52,6 +52,9 @@ public class CarToRentEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
     private Set<RentalOrderEntity> rentalOrders;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
+    private Set<CarInsuranceEntity> carInsuranceEntities;
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

@@ -19,6 +19,5 @@ public class CarInsurance {
     String insuranceNumber;
     LocalDate insuranceStartDate;
     LocalDate insuranceEndDate;
-    @ToString.Exclude
     CarToRent carToRent;
 }

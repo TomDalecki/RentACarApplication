@@ -14,7 +14,9 @@ import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarInsuranceMapper;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.*;
-import pl.TomDal.RentACarApplication.services.*;
+import pl.TomDal.RentACarApplication.services.CarToRentService;
+import pl.TomDal.RentACarApplication.services.InsuranceService;
+import pl.TomDal.RentACarApplication.services.UserService;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,9 +28,7 @@ public class AdminController {
 
     static final String ADMIN = "/admin";
 
-    private final CustomerService customerService;
     private final CarToRentService carToRentService;
-    private final EmployeeService employeeService;
     private final CarToRentMapper carToRentMapper;
     private final UserService userService;
     private final InsuranceService insuranceService;

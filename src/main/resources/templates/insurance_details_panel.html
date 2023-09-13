@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+    crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        body{
+        background-image: url("images/pietrowy_parking.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        }
+    </style>
+    <title>Insurance Details</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Insurance Details</h1>
+    </div>
+    <br>
+
+    <div class="container">
+        <div>
+            <table class="table">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Car Id Number</th>
+                        <th>Insurance Type</th>
+                        <th>Insurance Company</th>
+                        <th>Insurance Number</th>
+                        <th>Insurance Start Date</th>
+                        <th>Insurance End Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="insurance : ${insurancesDTOs}">
+                        <td th:text="${insurance.carToRent.brand}" ></td>
+                        <td th:text="${insurance.carToRent.model}"></td>
+                        <td th:text="${insurance.carToRent.carIdNumber}"></td>
+                        <td th:text="${insurance.insuranceType}"></td>
+                        <td th:text="${insurance.insuranceCompany}"></td>
+                        <td th:text="${insurance.insuranceNumber}"></td>
+                        <td th:text="${insurance.insuranceStartDate}"></td>
+                        <td th:text="${insurance.insuranceEndDate}"></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a th:href="@{/admin}" class="btn btn-warning" role="button">Back</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
