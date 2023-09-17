@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.TomDal.RentACarApplication.controllers.dto.CarInsuranceDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CarToRentDTO;
 import pl.TomDal.RentACarApplication.controllers.dto.CredentialDetailsDTO;
-import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarInsuranceMapper;
 import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
-import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.*;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
-import pl.TomDal.RentACarApplication.services.InsuranceService;
 import pl.TomDal.RentACarApplication.services.UserService;
 
 import java.util.Arrays;
@@ -31,8 +28,6 @@ public class AdminController {
     private final CarToRentService carToRentService;
     private final CarToRentMapper carToRentMapper;
     private final UserService userService;
-    private final InsuranceService insuranceService;
-    private final CarInsuranceMapper carInsuranceMapper;
 
     @GetMapping(value = ADMIN)
     public String adminPanel(Model model, CarToRentDTO carToRentDTO) {
@@ -97,18 +92,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping(value = "/admin/saveInsurance")
-    public String updateInsuranceDate(@Valid @ModelAttribute CarInsuranceDTO carInsuranceDTO, Integer carToRentId) {
-        insuranceService.saveInsurance(carInsuranceMapper.mapFromDTO(carInsuranceDTO
-                .withCarToRent(CarToRent.builder().carToRentId(carToRentId).build())));
-         return "redirect:/admin";
-    }
-
     @PostMapping(value = "/admin/updateTechIssue")
     public String updateTechnicalIssueStatus(Integer carToRentId) {
         //carToRentService.updateTechnicalStatus(carToRentId, carStatus);
 
         return "redirect:/admin";
-
     }
 }

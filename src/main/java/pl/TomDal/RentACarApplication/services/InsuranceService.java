@@ -55,17 +55,27 @@ public class InsuranceService {
         List<CarInsurance> carInsurances = new ArrayList<>();
         List<CarInsurance> carInsuranceByCarId = insuranceDAO.findCarInsuranceByCarId(carId);
 
+
         CarInsurance AC_Insurance = carInsuranceByCarId.stream()
                 .filter(insurance -> insurance.getInsuranceType().equals(InsuranceType.AC))
                 .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElse(null);
 
         CarInsurance OC_Insurance = carInsuranceByCarId.stream()
                 .filter(insurance -> insurance.getInsuranceType().equals(InsuranceType.OC))
-                .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElse(null);;
+                .max(Comparator.comparing(CarInsurance::getInsuranceEndDate)).orElse(null);
 
-        carInsurances.add(AC_Insurance);
-        carInsurances.add(OC_Insurance);
+        if (AC_Insurance != null) {
+            carInsurances.add(AC_Insurance);
+        }
+        if (OC_Insurance != null) {
+            carInsurances.add(OC_Insurance);
+        }
 
         return carInsurances;
+    }
+
+    @Transactional
+    public void updateUpdateInsuranceEndDate(Integer insuranceId, LocalDate insuranceEndDate) {
+        insuranceDAO.updateInsuranceEndDate(insuranceId, insuranceEndDate);
     }
 }

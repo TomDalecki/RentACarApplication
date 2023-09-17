@@ -22,20 +22,20 @@ values
 ('6', '1GB6G5CG1C1105936', 'SK98765', 'SUV', 'Dacia', 'Duster', '2021', 'black', 'TO_RENT');
 
 
-insert into CAR_INSURANCE (insurance_company, insurance_type, insurance_number, insurance_end_date, insurance_start_date, car_to_rent_id)
+insert into CAR_INSURANCE (insurance_company, insurance_type, insurance_number, insurance_start_date, insurance_end_date, car_to_rent_id)
 values
-('Warta', 'OC', 'OC123456/1', '20200123', '20240501', '1'),
-('Warta', 'OC', 'OC234567/2', '20200123', '20240501', '2'),
-('Warta', 'OC', 'OC345678/6', '20200123', '20240501', '3'),
-('Warta', 'OC', 'OC456789/4', '20200123', '20240501', '4'),
-('Warta', 'OC', 'OC567890/7', '20200123', '20240501', '5'),
-('Warta', 'OC', 'OC678901/9', '20200123', '20240501', '6'),
-('PZU', 'AC', 'AC123456/0', '20200123', '20240501', '1'),
-('PZU', 'AC', 'AC234567/2', '20200123', '20240501', '2'),
-('PZU', 'AC', 'AC345618/9', '20200123', '20240501', '3'),
-('PZU', 'AC', 'AC456123/1', '20200123', '20240501', '4'),
-('PZU', 'AC', 'AC598763/6', '20200123', '20240501', '5'),
-('PZU', 'AC', 'AC654321/8', '20200123', '20240501', '6');
+('Warta', 'OC', 'OC123456/1', '20200123', '20230501', '1'),
+('Warta', 'OC', 'OC234567/2', '20200123', '202340501', '2'),
+('Warta', 'OC', 'OC345678/6', '20200123', '20230501', '3'),
+('Warta', 'OC', 'OC456789/4', '20200123', '20230501', '4'),
+('Warta', 'OC', 'OC567890/7', '20200123', '20230501', '5'),
+('Warta', 'OC', 'OC678901/9', '20200123', '20230501', '6'),
+('PZU', 'AC', 'AC123456/0', '20200123', '20230501', '1'),
+('PZU', 'AC', 'AC234567/2', '20200123', '20230501', '2'),
+('PZU', 'AC', 'AC345618/9', '20200123', '20230501', '3'),
+('PZU', 'AC', 'AC456123/1', '20200123', '20230501', '4'),
+('PZU', 'AC', 'AC598763/6', '20200123', '20230501', '5'),
+('PZU', 'AC', 'AC654321/8', '20200123', '20230501', '6');
 
 insert into CAR_TECHNICAL_INSPECTION (inspection_expiry_date, car_to_rent_id)
 values
