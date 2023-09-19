@@ -15,6 +15,7 @@ import pl.TomDal.RentACarApplication.entity.enums.*;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
 import pl.TomDal.RentACarApplication.services.UserService;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -35,9 +36,13 @@ public class AdminController {
         List<CarToRentDTO> availableCarsToRent = carToRentService.findAvailableCars().stream()
                 .map(carToRentMapper::mapToDTO).toList();
 
-        List<CarToRentDTO> carsWithTechnicalIssue = carToRentService
+        List<CarToRentDTO> carsWithTechnicalIssue = new java.util.ArrayList<>(carToRentService
                 .findCarsToRentByCarStatus(CarStatus.TECHNICAL_ISSUE).stream()
-                .map(carToRentMapper::mapToDTO).toList();
+                .map(carToRentMapper::mapToDTO).toList());
+
+        carsWithTechnicalIssue.addAll(carToRentService
+                .findCarsToRentByCarStatus(CarStatus.DISABLED_BY_TECH_INSP).stream()
+                .map(carToRentMapper::mapToDTO).toList());
 
         List<CarToRentDTO> carsWithInsuranceIssue = carToRentService
                 .findCarsToRentByCarStatus(CarStatus.DISABLED_BY_INSURANCE).stream()
@@ -58,6 +63,9 @@ public class AdminController {
         InsuranceCompanies[] insuranceCompanies = InsuranceCompanies.values();
         Arrays.sort(insuranceCompanies, Comparator.comparing(Enum::name));
 
+        CarStatus[] carStatuses = CarStatus.values();
+        Arrays.sort(carStatuses, Comparator.comparing(Enum::name));
+
         model.addAttribute("availableCarsToRentDTOs", availableCarsToRent);
         model.addAttribute("carsWithTechnicalIssueDTOs", carsWithTechnicalIssue);
         model.addAttribute("carsWithInsuranceIssueDTOs", carsWithInsuranceIssue);
@@ -66,6 +74,7 @@ public class AdminController {
         model.addAttribute("carColors", carColors);
         model.addAttribute("insuranceType", insuranceType);
         model.addAttribute("insuranceCompanies", insuranceCompanies);
+        model.addAttribute("carStatuses", carStatuses);
         model.addAttribute("carToRentDTO", carToRentDTO);
         model.addAttribute("credentialDetailsDTO", new CredentialDetailsDTO());
         model.addAttribute("carInsuranceDTO", new CarInsuranceDTO());
@@ -74,9 +83,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "/admin/saveCar")
-    public String saveNewCar(@Valid @ModelAttribute CarToRentDTO carToRentDTO) {
+    public String saveNewCar(@Valid @ModelAttribute CarToRentDTO carToRentDTO, LocalDate technicalInspectionDate) {
         carToRentDTO.setCarStatus(CarStatus.DISABLED_BY_INSURANCE);
-        carToRentService.saveCar(carToRentDTO);
+        carToRentService.saveCar(carToRentDTO, technicalInspectionDate);
         return "redirect:/admin";
     }
 
@@ -89,13 +98,6 @@ public class AdminController {
     @PostMapping(value = "/admin/saveEmployee")
     public String saveNewEmployee(@Valid @ModelAttribute CredentialDetailsDTO credentialDetailsDTO) {
         userService.createUser(credentialDetailsDTO.getEmail(), credentialDetailsDTO.getPassword(), UserRole.EMPLOYEE);
-        return "redirect:/admin";
-    }
-
-    @PostMapping(value = "/admin/updateTechIssue")
-    public String updateTechnicalIssueStatus(Integer carToRentId) {
-        //carToRentService.updateTechnicalStatus(carToRentId, carStatus);
-
         return "redirect:/admin";
     }
 }

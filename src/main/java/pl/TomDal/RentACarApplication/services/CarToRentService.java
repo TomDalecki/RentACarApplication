@@ -10,6 +10,7 @@ import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 import pl.TomDal.RentACarApplication.exceptions.NotFoundException;
 import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
+import pl.TomDal.RentACarApplication.services.dao.TechnicalInspectionDAO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class CarToRentService {
     CarToRentDAO carToRentDAO;
     CarToRentMapper carToRentMapper;
+    TechnicalInspectionDAO technicalInspectionDAO;
 
     public List<CarToRent> findAllCars(){
         return carToRentDAO.findAllCars();
@@ -58,7 +60,14 @@ public class CarToRentService {
     }
 
     @Transactional
-    public void saveCar(CarToRentDTO carToRentDTO) {
+    public void saveCar(CarToRentDTO carToRentDTO, LocalDate technicalInspectionDate) {
         carToRentDAO.saveCar(carToRentMapper.mapFromDTO(carToRentDTO));
+
+        CarToRent car = carToRentDAO.findByVin(carToRentDTO.getVin()).orElseThrow();
+        technicalInspectionDAO.saveTechnicalInspection(car.getCarToRentId(), technicalInspectionDate);
+    }
+
+    public void updateTechnicalStatus(Integer carToRentId, CarStatus carStatus) {
+        carToRentDAO.changeCarStatusByCarId(carToRentId,carStatus);
     }
 }

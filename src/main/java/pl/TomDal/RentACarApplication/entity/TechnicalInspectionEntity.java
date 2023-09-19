@@ -4,31 +4,28 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "car_technical_inspection")
-public class CarTechnicalInspectionEntity {
+public class TechnicalInspectionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_technical_inspection_id")
-    private Integer carTechnicalInspectionId;
+    private Integer technicalInspectionId;
 
     @Column(name = "inspection_expiry_date")
-    private OffsetDateTime inspectionExpiryDate;
+    private LocalDate inspectionExpiryDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_to_rent_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private CarToRentEntity carToRent;
 
     @Override
@@ -38,8 +35,8 @@ public class CarTechnicalInspectionEntity {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        CarTechnicalInspectionEntity that = (CarTechnicalInspectionEntity) o;
-        return getCarTechnicalInspectionId() != null && Objects.equals(getCarTechnicalInspectionId(), that.getCarTechnicalInspectionId());
+        TechnicalInspectionEntity that = (TechnicalInspectionEntity) o;
+        return getTechnicalInspectionId() != null && Objects.equals(getTechnicalInspectionId(), that.getTechnicalInspectionId());
     }
 
     @Override
