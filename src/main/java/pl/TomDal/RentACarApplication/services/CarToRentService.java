@@ -1,5 +1,6 @@
 package pl.TomDal.RentACarApplication.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +9,6 @@ import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
-import pl.TomDal.RentACarApplication.exceptions.NotFoundException;
 import pl.TomDal.RentACarApplication.services.dao.CarToRentDAO;
 import pl.TomDal.RentACarApplication.services.dao.TechnicalInspectionDAO;
 
@@ -46,12 +46,13 @@ public class CarToRentService {
     public CarToRent findByCarIdNumber(String carIdNumber){
         Optional<CarToRent> car = carToRentDAO.findByCarIdNumber(carIdNumber);
         return car.orElseThrow(
-                ()->new NotFoundException("Could not find the car with IdNumber: [%s]".formatted(carIdNumber)));
+                ()-> new EntityNotFoundException("Could not find the car with IdNumber: [%s]".formatted(carIdNumber)));
     }
 
     public CarToRent findByVin(String vin){
         Optional<CarToRent> car = carToRentDAO.findByVin(vin);
-        return car.orElseThrow(()->new NotFoundException("Could not find the car with VIN: [%s]".formatted(vin)));
+        return car.orElseThrow(
+                ()-> new EntityNotFoundException("Could not find the car with VIN: [%s]".formatted(vin)));
     }
 
     @Transactional
@@ -60,11 +61,16 @@ public class CarToRentService {
     }
 
     @Transactional
-    public void saveCar(CarToRentDTO carToRentDTO, LocalDate technicalInspectionDate) {
+    public CarToRentDTO saveCar(CarToRentDTO carToRentDTO, LocalDate technicalInspectionDate) {
         carToRentDAO.saveCar(carToRentMapper.mapFromDTO(carToRentDTO));
 
-        CarToRent car = carToRentDAO.findByVin(carToRentDTO.getVin()).orElseThrow();
+        CarToRent car = carToRentDAO.findByVin(carToRentDTO.getVin()).orElseThrow(
+                ()-> new EntityNotFoundException("Could not find the car with VIN: [%s]"
+                        .formatted(carToRentDTO.getVin())));
+
         technicalInspectionDAO.saveTechnicalInspection(car.getCarToRentId(), technicalInspectionDate);
+
+        return carToRentMapper.mapToDTO(car);
     }
 
     public void updateTechnicalStatus(Integer carToRentId, CarStatus carStatus) {
