@@ -1,13 +1,11 @@
 package pl.TomDal.RentACarApplication.domain;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Value
+@Setter
+@Data
 @Builder
 @EqualsAndHashCode
 @ToString

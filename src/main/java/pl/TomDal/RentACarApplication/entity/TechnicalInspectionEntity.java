@@ -24,7 +24,7 @@ public class TechnicalInspectionEntity {
     @Column(name = "inspection_expiry_date")
     private LocalDate inspectionExpiryDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "car_to_rent_id")
     private CarToRentEntity carToRent;
 

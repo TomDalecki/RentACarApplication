@@ -76,6 +76,11 @@ public class CarToRentRepository implements CarToRentDAO {
     }
 
     @Override
+    public void deleteCarByVin(String vin) {
+        carToRentJpaRepository.deleteByVin(vin);
+    }
+
+    @Override
     @Transactional
     public void changeCarStatusByCarId(Integer carToRentId, CarStatus carStatus) {
         carToRentJpaRepository.updateCarStatusByCarToRentId(carToRentId, carStatus);

@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CarToRentRestController {
 
-    public static final String CARTORENT = "/carToRent";
+    public static final String CARTORENT = "/api";
     public static final String CARTORENT_CAR_ID_NUMBER = "/findCar/{carIdNumber}";
     public static final String CARTORENT_CAR_ID_NUMBER_RESULT = "/findCar/%s";
     public static final String CARTORENT_CAR_STATUS = "/findWithStatus/{carStatus}";

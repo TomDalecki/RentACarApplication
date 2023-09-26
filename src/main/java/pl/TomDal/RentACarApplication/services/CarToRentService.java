@@ -49,10 +49,8 @@ public class CarToRentService {
                 ()-> new EntityNotFoundException("Could not find the car with IdNumber: [%s]".formatted(carIdNumber)));
     }
 
-    public CarToRent findByVin(String vin){
-        Optional<CarToRent> car = carToRentDAO.findByVin(vin);
-        return car.orElseThrow(
-                ()-> new EntityNotFoundException("Could not find the car with VIN: [%s]".formatted(vin)));
+    public Optional<CarToRent> findByVin(String vin){
+        return carToRentDAO.findByVin(vin);
     }
 
     @Transactional
@@ -73,7 +71,13 @@ public class CarToRentService {
         return carToRentMapper.mapToDTO(car);
     }
 
+    @Transactional
     public void updateTechnicalStatus(Integer carToRentId, CarStatus carStatus) {
         carToRentDAO.changeCarStatusByCarId(carToRentId,carStatus);
+    }
+
+    @Transactional
+    public void deleteCarByVin(String vin) {
+        carToRentDAO.deleteCarByVin(vin);
     }
 }

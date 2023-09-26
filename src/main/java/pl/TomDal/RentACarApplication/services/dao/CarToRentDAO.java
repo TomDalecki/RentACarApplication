@@ -29,4 +29,6 @@ public interface CarToRentDAO {
     List<CarToRent> findCarsToRentByCarStatus(CarStatus carStatus);
 
     Optional<CarToRent> findCarToRentByCarId(Integer carToRentId);
+
+    void deleteCarByVin(String vin);
 }

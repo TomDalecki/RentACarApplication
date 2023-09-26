@@ -49,11 +49,15 @@ public class CarToRentEntity {
     @Column(name = "car_status")
     private CarStatus carStatus;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent", cascade = CascadeType.REMOVE)
     private Set<RentalOrderEntity> rentalOrders;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carToRent", cascade = CascadeType.REMOVE)
     private Set<CarInsuranceEntity> carInsuranceEntities;
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "carToRent", cascade = CascadeType.REMOVE)
+    private TechnicalInspectionEntity technicalInspectionEntity;
+
 
     @Override
     public final boolean equals(Object o) {
