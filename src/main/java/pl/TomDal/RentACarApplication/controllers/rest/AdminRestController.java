@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.TomDal.RentACarApplication.controllers.dto.mapper.CarToRentMapper;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 import pl.TomDal.RentACarApplication.services.CarToRentService;
 
@@ -20,7 +19,6 @@ public class AdminRestController {
     public static final String ADMIN = "/api";
     public static final String ADMIN_DELETE_CAR = "/deleteCar/{vin}";
     private CarToRentService carToRentService;
-    private CarToRentMapper carToRentMapper;
 
     @DeleteMapping(value = ADMIN_DELETE_CAR)
     public ResponseEntity<?> deleteCarToRent(@PathVariable String vin) {

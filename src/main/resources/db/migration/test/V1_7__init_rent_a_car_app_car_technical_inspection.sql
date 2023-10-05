@@ -1,7 +1,7 @@
 CREATE TABLE car_technical_inspection
 (
     car_technical_inspection_id SERIAL                      NOT NULL,
-    inspection_expiry_date      TIMESTAMP WITH TIME ZONE    NOT NULL,
+    inspection_expiry_date      DATE                        NOT NULL,
     car_to_rent_id              INT                         NOT NULL,
     PRIMARY KEY (car_technical_inspection_id),
     CONSTRAINT fk_car_technical_inspection_car_to_rent

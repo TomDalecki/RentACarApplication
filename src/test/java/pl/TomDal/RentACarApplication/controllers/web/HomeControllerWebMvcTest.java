@@ -1,6 +1,5 @@
 package pl.TomDal.RentACarApplication.controllers.web;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = HomeController.class)
 @ActiveProfiles("test")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class HomeControllerMvcTest {
+class HomeControllerWebMvcTest {
 
     private final WebApplicationContext webApplicationContext;
 

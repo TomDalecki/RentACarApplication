@@ -4,8 +4,8 @@ CREATE TABLE car_insurance
     insurance_company       VARCHAR(30)                 NOT NULL,
     insurance_type          VARCHAR(30)                 NOT NULL,
     insurance_number        VARCHAR(30)                 NOT NULL,
-    insurance_end_date    TIMESTAMP WITH TIME ZONE      NOT NULL,
     insurance_start_date    TIMESTAMP WITH TIME ZONE    NOT NULL,
+    insurance_end_date      TIMESTAMP WITH TIME ZONE      NOT NULL,
     car_to_rent_id          INT                         NOT NULL,
     PRIMARY KEY (car_insurance_id),
     CONSTRAINT fk_car_insurance_car_to_rent

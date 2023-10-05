@@ -26,6 +26,10 @@ public class TechnicalInspectionRestController {
         TechnicalInspection existingTechnicalInspection = technicalInspectionService
                 .findInspectionDetailByCarId(carIdNumber);
 
+        if (existingTechnicalInspection == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         technicalInspectionService.updateExpiryDate(existingTechnicalInspection.getTechnicalInspectionId(), newInspDate);
         return ResponseEntity.ok().build();
     }
@@ -38,10 +42,13 @@ public class TechnicalInspectionRestController {
         TechnicalInspection existingTechnicalInspection = technicalInspectionService
                 .findInspectionDetailByCarId(carIdNumber);
 
+        if (existingTechnicalInspection == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         technicalInspectionService.updateExpiryDate(existingTechnicalInspection.getTechnicalInspectionId(),
                 technicalInspectionDTO.getInspectionExpiryDate());
 
         return ResponseEntity.ok().build();
     }
-
 }
