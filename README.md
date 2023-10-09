@@ -16,38 +16,43 @@ Target shape of the application:
 Ultimately, the application will handle the following business cases:
 
 •	Four roles will be defined: admin, owner, employee, customer
+
 •	The admin role will have the broadest permissions (it will combine the roles of owner, employee, customer), 
 	but above all it will allow to determine the owner of the car rental company
+ 
 •	The owner role will allow:
-	o	adding/removing vehicles and their photos,
-	o	adding/removing employees,
-	o	adding/removing customers,
-	o	temporary disabling of a vehicle (e.g. due to a breakdown, invalidity of a technical inspection, expiration of an insurance policy)
-	o	preview/report on cars during rental
-	o	preview/report on cars available for rent
-	o	preview/report on cars whose insurance ends within 30 days
-	o	preview/report on cars whose technical inspection ends within 30 days
-	o	reports on employees - e.g. number of rentals completed in x days
+
+	-	adding/removing vehicles and their photos,
+	-	adding/removing employees,
+	-	adding/removing customers,
+	-	temporary disabling of a vehicle (e.g. due to a breakdown, invalidity of a technical inspection, expiration of an insurance policy)
+	-	preview/report on cars during rental
+	-	preview/report on cars available for rent
+	-	preview/report on cars whose insurance ends within 30 days
+	-	preview/report on cars whose technical inspection ends within 30 days
+	-	reports on employees - e.g. number of rentals completed in x days
 
 •	The employee role will allow:
-	o	adding customers,
-	o	updating information about vehicles (mileage, damage, additional notes),
-	o	updating dates of vehicle availability for rent,
-	o	renting a vehicle for a specific customer for a specified time,
-	o	cancelling a rental,
-	o	updating data regarding the vehicle's OC/AC insurance
-	o	updating data regarding the validity of the technical inspection
-	o	temporary disabling of a vehicle (e.g. due to a breakdown, invalidity of a technical inspection, expiration of an insurance policy)
-	o	preview/report on cars during rental
-	o	preview/report on cars available for rent
+
+	-	adding customers,
+	-	updating information about vehicles (mileage, damage, additional notes),
+	-	updating dates of vehicle availability for rent,
+	-	renting a vehicle for a specific customer for a specified time,
+	-	cancelling a rental,
+	-	updating data regarding the vehicle's OC/AC insurance
+	-	updating data regarding the validity of the technical inspection
+	-	temporary disabling of a vehicle (e.g. due to a breakdown, invalidity of a technical inspection, expiration of an insurance policy)
+	-	preview/report on cars during rental
+	-	preview/report on cars available for rent
 
 •	The customer role will allow:
-	o	registering as a rental customer,
-	o	viewing vehicles that are available for rent,
-	o	viewing dates of vehicle availability for rent,
-	o	reserving a vehicle for a specified time,
-	o	cancelling a reservation,
-	o	viewing history of their rentals.
+
+	-	registering as a rental customer,
+	-	viewing vehicles that are available for rent,
+	-	viewing dates of vehicle availability for rent,
+	-	reserving a vehicle for a specified time,
+	-	cancelling a reservation,
+	-	viewing history of their rentals.
 
 In addition, I would like to connect the application with Google Maps api and weather api, so that they are visible from the customer's view 
 (to be used e.g. for planning trips, viewing road conditions etc.)
