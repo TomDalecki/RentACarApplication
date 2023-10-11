@@ -1,17 +1,32 @@
 # RentACarApplication
-RentACarApplication is a web application designed for car rental companies. Through the application, rental customers can place car rental orders, 
-rental employees can handle incoming orders and monitor technical and insurance issues of the owned fleet of vehicles. The owner of the rental company has the ability to create a new customer, a new employee, and a new car. 
-In the current version of the application, the owner through the admin panel has a preview and the ability to react in a situation when the vehicle does not have a valid technical inspection, 
-valid insurance policy or the vehicle has a technical defect. Thus, it enables or disables vehicles to the fleet. 
-The application is still in the development phase.
-
-The application consists of two parts, backend and frontend. 
-Writing backend I used technologies such as: Java 17, Spring Boot, Gradle, Spring MVC, REST API, Hibernate, PostgreSQL, Flyway, MapStruct, Spring Security, unit and integration tests. 
-To create the frontend I used: Thymeleaf, HTML, CSS.
-
-Running the application: Due to technical problems on my side (my PC processor does not support Second Level Address Translation) I cannot make a Docker container and place the project in the cloud. 
-Therefore, to run the application you need to open the project in IDE and run it from IDE level.
-
+<div>
+	RentACarApplication is a web application designed for car rental companies. Through the application, rental customers can place car rental orders, 
+	rental employees can handle incoming orders and monitor technical and insurance issues of the owned fleet of vehicles. The owner of the rental company has the ability to create a new customer, a new employee, and a new car. 
+	In the current version of the application, the owner through the admin panel has a preview and the ability to react in a situation when the vehicle does not have a valid technical inspection, 
+	valid insurance policy or the vehicle has a technical defect. Thus, it enables or disables vehicles to the fleet. 
+	The application is still in the development phase.
+</div>
+<br>
+<div>
+	The application consists of two parts, backend and frontend. 
+	Writing backend I used technologies such as: Java 17, Spring Boot, Gradle, Spring MVC, REST API, Hibernate, PostgreSQL, Flyway, MapStruct, Spring Security, unit and integration tests. 
+	To create the frontend I used: Thymeleaf, HTML, CSS.
+</div>
+<br>
+<div>
+	Running the application:
+<br>
+	Due to technical problems on my side (my PC processor does not support Second Level Address Translation) I cannot make a Docker container and place the project in the cloud. 
+	Therefore, to run the application you need to open the project in IDE and run it from IDE level.
+</div>
+<br>
+<div>
+	To check the operation of the application, use the following users: 
+		<p>Admin user: admin1@pl, password: password<br>
+			Customer user: piotr@pl, password: password<br>
+			Employee user: empl1@pl, password: password</p>
+</div>
+<br>
 Target shape of the application: 
 Ultimately, the application will handle the following business cases:
 
