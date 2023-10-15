@@ -22,9 +22,11 @@
 <br>
 <div>
 	To check the operation of the application, use the following users: 
-		<p>Admin user: admin1@pl, password: password<br>
+		<p>
+			Admin user: admin1@pl, password: password<br>
 			Customer user: piotr@pl, password: password<br>
-			Employee user: empl1@pl, password: password</p>
+			Employee user: empl1@pl, password: password
+		</p>
 </div>
 <br>
 Target shape of the application: 
