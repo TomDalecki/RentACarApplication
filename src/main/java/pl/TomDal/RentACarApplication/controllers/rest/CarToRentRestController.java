@@ -52,9 +52,8 @@ public class CarToRentRestController {
     }
 
     @PostMapping
-    public ResponseEntity<CarToRentDTO> addCarToRent(
-            @RequestBody CarToRentRestDTO carToRentRestDTO
-    ){
+    public ResponseEntity<CarToRentDTO> addCarToRent(@RequestBody CarToRentRestDTO carToRentRestDTO){
+
         CarToRentDTO carToSave = carToRentRestDTO.getCarToRentDTO().withCarStatus(CarStatus.DISABLED_BY_INSURANCE);
 
         CarToRentDTO newCar = carToRentService.saveCar(carToSave, carToRentRestDTO.getTechnicalInspectionDate());
