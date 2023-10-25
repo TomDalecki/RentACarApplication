@@ -1,19 +1,20 @@
 package pl.TomDal.RentACarApplication.controllers.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
+import lombok.*;
 import pl.TomDal.RentACarApplication.domain.CarToRent;
 
 import java.time.LocalDate;
 
-@Value
+@Data
 @Builder
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class TechnicalInspectionDTO {
     Integer technicalInspectionId;
     LocalDate inspectionExpiryDate;
     CarToRent carToRent;
+
+
 }

@@ -18,22 +18,6 @@ public class TechnicalInspectionRestController {
     public static final String CAR_TO_RENT_UPDATE_TECH_INSP_PATCH = "/updateTechInsp/{carIdNumber}/inspDate";
     private TechnicalInspectionService technicalInspectionService;
 
-    @PatchMapping(CAR_TO_RENT_UPDATE_TECH_INSP_PATCH)
-    public ResponseEntity<?> updateTechInspectionDate(
-            @PathVariable Integer carIdNumber,
-            @RequestParam LocalDate newInspDate
-    ) {
-        TechnicalInspection existingTechnicalInspection = technicalInspectionService
-                .findInspectionDetailByCarId(carIdNumber);
-
-        if (existingTechnicalInspection == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        technicalInspectionService.updateExpiryDate(existingTechnicalInspection.getTechnicalInspectionId(), newInspDate);
-        return ResponseEntity.ok().build();
-    }
-
     @PutMapping(CAR_TO_RENT_UPDATE_TECH_INSP_PUT)
     public ResponseEntity<?> updateTechInspectionDate(
             @PathVariable Integer carIdNumber,
@@ -49,6 +33,22 @@ public class TechnicalInspectionRestController {
         technicalInspectionService.updateExpiryDate(existingTechnicalInspection.getTechnicalInspectionId(),
                 technicalInspectionDTO.getInspectionExpiryDate());
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(CAR_TO_RENT_UPDATE_TECH_INSP_PATCH)
+    public ResponseEntity<?> updateTechInspectionDate(
+            @PathVariable Integer carIdNumber,
+            @RequestParam LocalDate newInspDate
+    ) {
+        TechnicalInspection existingTechnicalInspection = technicalInspectionService
+                .findInspectionDetailByCarId(carIdNumber);
+
+        if (existingTechnicalInspection == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        technicalInspectionService.updateExpiryDate(existingTechnicalInspection.getTechnicalInspectionId(), newInspDate);
         return ResponseEntity.ok().build();
     }
 }
