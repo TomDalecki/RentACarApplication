@@ -33,6 +33,7 @@ class TechnicalInspectionRestControllerUnitTest {
         when(technicalInspectionService.findInspectionDetailByCarId(carIdNumber)).thenReturn(technicalInspection);
         LocalDate newInspDate = LocalDate.now();
 
+
         //when
         ResponseEntity<?> responseEntity = technicalInspectionRestController
                 .updateTechInspectionDate(carIdNumber, newInspDate);

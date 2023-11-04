@@ -38,7 +38,7 @@ public abstract class RestAssuredIntegrationTestBase extends AbstractIntegration
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON);
     }
-    // dodajemy objectMapper, żeby w testach zawsze tak samo były konfigurowane obiekty na jsona
+    // dodajemy Object Mapper, żeby w testach zawsze tak samo były konfigurowane obiekty na json'a
     private RestAssuredConfig getConfig() {
         return RestAssuredConfig
                 .config()

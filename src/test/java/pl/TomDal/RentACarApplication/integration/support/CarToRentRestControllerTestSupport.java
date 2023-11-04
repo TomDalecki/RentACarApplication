@@ -14,7 +14,7 @@ public interface CarToRentRestControllerTestSupport {
     RequestSpecification requestSpecification();
 
 
-    //ten zapis to całe qlue używania RestAssured, w ten sposób definiujemy, że RestAssured jako klient ma wykonać
+    //ten zapis to całe clou używania Rest Assured, w ten sposób definiujemy, że Rest Assured jako klient ma wykonać
     //zapytanie/żądanie get na naszą aplikację, na nasz endpoint, a następnie sprawdzamy, czy odpowiedź jest poprawna
     //oraz przemapować odpowiedź (zwróconego jason'a) na obiekt CarsToRentDTO
     default CarsToRentDTO allCarsList(){
@@ -37,10 +37,19 @@ public interface CarToRentRestControllerTestSupport {
                 .as(CarsToRentDTO.class);
     }
 
-
     default CarToRentDTO carDetails(String carIdNumber){
         return requestSpecification()
                 .get(CarToRentRestController.CARTORENT_CAR_ID_NUMBER, carIdNumber)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .and()
+                .extract()
+                .as(CarToRentDTO.class);
+    }
+
+    default CarToRentDTO getCarToRent(String path){
+        return requestSpecification()
+                .get(path)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .and()
