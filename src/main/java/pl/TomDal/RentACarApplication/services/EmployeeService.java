@@ -22,6 +22,6 @@ public class EmployeeService {
 
     Employee findEmployeeByEmail(String email) {
         return employeeDAO.findEmployeeByEmail(email).orElseThrow(
-                ()->new NotFoundException("Could not find the car with VIN: [%s]".formatted(email)));
+                ()->new NotFoundException("Could not find the employee with email: [%s]".formatted(email)));
     }
 }
