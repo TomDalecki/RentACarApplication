@@ -1,9 +1,8 @@
 package pl.TomDal.RentACarApplication.util;
 
 import pl.TomDal.RentACarApplication.domain.*;
-import pl.TomDal.RentACarApplication.entity.enums.CarStatus;
-import pl.TomDal.RentACarApplication.entity.enums.CarType;
-import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
+import pl.TomDal.RentACarApplication.entity.CarInsuranceEntity;
+import pl.TomDal.RentACarApplication.entity.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -194,4 +193,45 @@ public class TestDataFixtures {
                 .build();
     }
 
+    public static CarInsurance testOCInsurance1() {
+        return CarInsurance.builder()
+                .insuranceCompany(InsuranceCompanies.PZU)
+                .insuranceType(InsuranceType.OC)
+                .insuranceNumber("testOC")
+                .insuranceStartDate(LocalDate.now())
+                .insuranceEndDate(LocalDate.now())
+                .carToRent(testCar1())
+                .build();
+    }
+
+    public static CarInsurance testACInsurance1() {
+        return CarInsurance.builder()
+                .insuranceCompany(InsuranceCompanies.PZU)
+                .insuranceType(InsuranceType.AC)
+                .insuranceNumber("testAC")
+                .insuranceStartDate(LocalDate.now())
+                .insuranceEndDate(LocalDate.now())
+                .carToRent(testCar1())
+                .build();
+    }
+
+    public static CarInsuranceEntity testOCInsuranceEntity() {
+        return CarInsuranceEntity.builder()
+                .insuranceCompany(InsuranceCompanies.PZU)
+                .insuranceType(InsuranceType.OC)
+                .insuranceNumber("testOC")
+                .insuranceStartDate(LocalDate.now())
+                .insuranceEndDate(LocalDate.now())
+                .build();
+    }
+
+    public static CarInsuranceEntity testACInsuranceEntity() {
+        return CarInsuranceEntity.builder()
+                .insuranceCompany(InsuranceCompanies.PZU)
+                .insuranceType(InsuranceType.AC)
+                .insuranceNumber("testAC")
+                .insuranceStartDate(LocalDate.now())
+                .insuranceEndDate(LocalDate.now())
+                .build();
+    }
 }
