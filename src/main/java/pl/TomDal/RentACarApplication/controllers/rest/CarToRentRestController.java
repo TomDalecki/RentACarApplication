@@ -55,8 +55,9 @@ public class CarToRentRestController {
     public ResponseEntity<CarToRentDTO> addCarToRent(@RequestBody CarToRentRestDTO carToRentRestDTO){
 
         CarToRentDTO carToSave = carToRentRestDTO.getCarToRentDTO().withCarStatus(CarStatus.DISABLED_BY_INSURANCE);
+        LocalDate technicalInspectionDate = carToRentRestDTO.getTechnicalInspectionDate();
 
-        CarToRentDTO newCar = carToRentService.saveCar(carToSave, carToRentRestDTO.getTechnicalInspectionDate());
+        CarToRentDTO newCar = carToRentService.saveCar(carToSave, technicalInspectionDate);
 
         return ResponseEntity
                 .created(URI.create(CARTORENT + CARTORENT_CAR_ID_NUMBER_RESULT.formatted(newCar.getCarToRentId())))

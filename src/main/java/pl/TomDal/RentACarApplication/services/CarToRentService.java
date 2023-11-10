@@ -46,7 +46,7 @@ public class CarToRentService {
     public CarToRent findByCarIdNumber(String carIdNumber){
         Optional<CarToRent> car = carToRentDAO.findByCarIdNumber(carIdNumber);
         return car.orElseThrow(
-                ()-> new EntityNotFoundException("Could not find the car with IdNumber: [%s]".formatted(carIdNumber)));
+                ()-> new EntityNotFoundException("Could not find the car with car license plate: [%s]".formatted(carIdNumber)));
     }
 
     public Optional<CarToRent> findByVin(String vin){
