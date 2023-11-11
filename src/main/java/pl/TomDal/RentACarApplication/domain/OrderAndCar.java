@@ -17,13 +17,4 @@ public interface OrderAndCar {
     LocalDate getRentalEndDate();
     BigDecimal getTotalPrice();
     Integer getCarToRent();
-
-
-//    String vin;
-//    String carIdNumber;
-//    String rentNumber;
-//    OffsetDateTime receivedDateTime;
-//    OrderStatus orderStatus;
-//    Customer customer;
-//    Employee employee;
 }
