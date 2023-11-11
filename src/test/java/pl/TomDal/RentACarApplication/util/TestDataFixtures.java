@@ -3,6 +3,7 @@ package pl.TomDal.RentACarApplication.util;
 import org.jetbrains.annotations.NotNull;
 import pl.TomDal.RentACarApplication.domain.*;
 import pl.TomDal.RentACarApplication.entity.CarInsuranceEntity;
+import pl.TomDal.RentACarApplication.entity.TechnicalInspectionEntity;
 import pl.TomDal.RentACarApplication.entity.enums.*;
 
 import java.math.BigDecimal;
@@ -190,6 +191,12 @@ public class TestDataFixtures {
 
     public static TechnicalInspection testTechnicalInspection1() {
         return TechnicalInspection.builder()
+                .inspectionExpiryDate(LocalDate.of(2023, 7, 15))
+                .build();
+    }
+
+    public static TechnicalInspectionEntity testTechnicalInspectionEntity1() {
+        return TechnicalInspectionEntity.builder()
                 .inspectionExpiryDate(LocalDate.of(2023, 7, 15))
                 .build();
     }
