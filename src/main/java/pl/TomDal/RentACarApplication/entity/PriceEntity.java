@@ -1,15 +1,16 @@
 package pl.TomDal.RentACarApplication.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import pl.TomDal.RentACarApplication.entity.enums.CarType;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Getter
-@Setter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

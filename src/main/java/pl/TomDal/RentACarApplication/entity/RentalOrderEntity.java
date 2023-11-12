@@ -2,17 +2,13 @@ package pl.TomDal.RentACarApplication.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 import pl.TomDal.RentACarApplication.entity.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 
 @Getter
-@Setter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -59,20 +55,4 @@ public class RentalOrderEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private EmployeeEntity employee;
-
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        RentalOrderEntity that = (RentalOrderEntity) o;
-        return getRentalOrderId() != null && Objects.equals(getRentalOrderId(), that.getRentalOrderId());
-    }
-
-    @Override
-    public final int hashCode() {
-        return getClass().hashCode();
-    }
 }

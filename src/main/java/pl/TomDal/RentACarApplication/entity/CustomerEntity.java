@@ -2,14 +2,10 @@ package pl.TomDal.RentACarApplication.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@Setter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,20 +38,4 @@ public class CustomerEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
     private Set<RentalOrderEntity> rentalOrderEntities;
-
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        CustomerEntity that = (CustomerEntity) o;
-        return getCustomerId() != null && Objects.equals(getCustomerId(), that.getCustomerId());
-    }
-
-    @Override
-    public final int hashCode() {
-        return getClass().hashCode();
-    }
 }
