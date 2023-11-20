@@ -17,7 +17,6 @@ import java.util.NoSuchElementException;
 import static pl.TomDal.RentACarApplication.util.TestDataFixtures.*;
 
 @ActiveProfiles("test")
-//@SpringBootTest
 @DataJpaTest
 @ComponentScan(basePackages = "pl.TomDal.RentACarApplication")
 @TestPropertySource(locations = "classpath:application-test.yml")

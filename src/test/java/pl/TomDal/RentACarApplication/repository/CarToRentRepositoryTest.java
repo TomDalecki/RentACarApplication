@@ -38,14 +38,12 @@ class CarToRentRepositoryTest {
 
     @Test
     void thatCarToRentCanBeSavedCorrectly(){
-       //given
+
        //when
-        List<CarToRent> carsToRentFound = carToRentRepository.findAllCars();
+        List<CarToRent> result = carToRentRepository.findAllCars();
 
         //then
-        Assertions.assertThat(carsToRentFound.size()).isEqualTo(3);
-
-        carToRentRepository.deleteCar(testCar1());
+        Assertions.assertThat(result.size()).isEqualTo(3);
     }
 
     @Test
@@ -56,10 +54,10 @@ class CarToRentRepositoryTest {
         carToRentRepository.deleteCar(testCar3());
 
         //when
-        List<CarToRent> carsToRentFound = carToRentRepository.findAllCars();
+        List<CarToRent> result = carToRentRepository.findAllCars();
 
         //then
-        Assertions.assertThat(carsToRentFound.size()).isEqualTo(0);
+        Assertions.assertThat(result.size()).isEqualTo(0);
     }
 
     @Test
@@ -105,7 +103,7 @@ class CarToRentRepositoryTest {
     }
 
     @Test
-    void findAvailableCarsByCarType() {
+    void thatFindingAvailableCarsByCarTypeWorksCorrectly() {
         //given
         CarType carType = CarType.Sedan;
 

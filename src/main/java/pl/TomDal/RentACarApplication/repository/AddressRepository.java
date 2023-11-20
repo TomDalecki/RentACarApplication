@@ -7,6 +7,8 @@ import pl.TomDal.RentACarApplication.repository.jpa.AddressJpaRepository;
 import pl.TomDal.RentACarApplication.repository.mapper.AddressEntityMapper;
 import pl.TomDal.RentACarApplication.services.dao.AddressDAO;
 
+import java.util.List;
+
 @Repository
 @AllArgsConstructor
 public class AddressRepository implements AddressDAO {
@@ -16,5 +18,11 @@ public class AddressRepository implements AddressDAO {
 
     public void saveAddress(Address address) {
         addressJpaRepository.save(addressEntityMapper.mapToEntity(address));
+    }
+
+    public List<Address> findAll() {
+        return addressJpaRepository.findAll().stream()
+                .map(addressEntityMapper::mapFromEntity)
+                .toList();
     }
 }

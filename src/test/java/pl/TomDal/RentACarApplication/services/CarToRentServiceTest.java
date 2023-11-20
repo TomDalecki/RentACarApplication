@@ -157,7 +157,7 @@ class CarToRentServiceTest {
     void thatFindingByNotExistingCarIdNumberThrowsException() {
         //given
         String carIdNumber = "notExistingCarIdNumber";
-        String expectedMessage = "Could not find the car with IdNumber: [%s]".formatted(carIdNumber);
+        String expectedMessage = "Could not find the car with car license plate: [%s]".formatted(carIdNumber);
 
         //when
         when(carToRentDAO.findByCarIdNumber(carIdNumber)).thenReturn(Optional.empty());

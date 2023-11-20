@@ -33,4 +33,10 @@ public class CarInsuranceRepository implements InsuranceDAO {
     public void updateInsuranceEndDate(Integer insuranceId, LocalDate insuranceEndDate) {
         carInsuranceJpaRepository.updateInsuranceEndDateByCarInsuranceId(insuranceEndDate, insuranceId);
     }
+
+    public List<CarInsurance> findAll() {
+        return carInsuranceJpaRepository.findAll().stream()
+                .map(carInsuranceEntity -> carInsuranceEntityMapper.mapFromEntity(carInsuranceEntity))
+                .toList();
+    }
 }
